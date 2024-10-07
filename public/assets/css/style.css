@@ -1,0 +1,90 @@
+.hero {
+    margin-top: 20px;
+    padding-bottom: 110px;
+}
+
+.event-date {
+    width: fit-content;
+    height: 41px;
+    background: linear-gradient(90deg, #4b3d9b 0%, #ed3a8d 118.38%);
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    letter-spacing: 0.095em;
+    font-weight: 400;
+}
+
+.c-square {
+    width: 145px;
+    height: 145px;
+    background: linear-gradient(155.93deg, #7f6aff 11.97%, #1f1a3c 170.08%);
+    border-radius: 8px;
+    font-size: 48px;
+    font-weight: 600;
+    padding-top: 20px;
+}
+
+.small-text {
+    color: #ff75b5;
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: -10px;
+}
+
+.btn-submit-paper {
+    background-color: #7764f0 !important;
+    color: #fff !important;
+}
+
+.sponsor-section {
+    background: linear-gradient(155.93deg, #7f6aff 11.97%, #1f1a3c 170.08%);
+}
+
+.sponsor-logo img {
+    max-height: 90px;
+    margin: 0 15px;
+}
+
+.card {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .event-date {
+        width: fit-content;
+        height: 41px;
+        background: linear-gradient(90deg, #4b3d9b 0%, #ed3a8d 118.38%);
+        border-radius: 8px;
+        padding: 6px 24px;
+        font-size: 12px;
+        letter-spacing: 0.095em;
+        font-weight: 400;
+    }
+    .c-square {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(155.93deg, #7f6aff 11.97%, #1f1a3c 170.08%);
+        border-radius: 8px;
+        font-size: 30px;
+        font-weight: 600;
+        padding-top: 10px;
+    }
+
+    .small-text {
+        color: #ff75b5;
+        font-size: 10px;
+        font-weight: 400;
+        margin-top: -10px;
+    }
+
+    .sponsor-logo img {
+        max-height: 30px;
+        margin: 0 15px;
+    }
+
+    h5.sponsor {
+        font-size: 15px;
+        padding-bottom: 10px;
+    }
+}
