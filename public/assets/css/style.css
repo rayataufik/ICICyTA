@@ -45,9 +45,106 @@
     margin: 0 15px;
 }
 
-.card {
+.card-speaker {
     background-color: transparent !important;
     border: none !important;
+}
+
+.call-for-papers img {
+    margin-top: 25%;
+}
+.call-for-papers h1 {
+    margin-left: 110px;
+}
+
+.call-papers p {
+    padding-right: 110px;
+    padding-left: 110px;
+}
+
+.card-for-papers {
+    margin-top: 100px;
+}
+
+.for-author {
+    margin-top: 50px;
+}
+
+.login {
+    position: relative;
+    background: linear-gradient(
+        56deg,
+        rgba(46, 35, 108, 1) 0%,
+        rgba(82, 20, 118, 1) 50%,
+        rgba(46, 35, 108, 1) 100%
+    );
+    background-blend-mode: screen;
+    z-index: 1;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.login::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("../../images/bigwave.svg") no-repeat left center;
+    background-size: contain;
+    transform: rotate(90deg);
+    z-index: -1;
+    margin-left: -540px;
+}
+
+.login-left {
+    flex: 1;
+}
+
+.login-left-img {
+    margin-top: 45%;
+}
+
+.login-right {
+    flex: 1;
+    background: linear-gradient(
+        133deg,
+        rgba(40, 29, 100, 1) 0%,
+        rgba(71, 53, 171, 1) 50%,
+        rgba(40, 29, 100, 1) 100%
+    );
+    border-radius: 20px 0px 0px 20px;
+    height: 100vh;
+}
+
+.form-login {
+    margin-top: 170px;
+    padding: 0 10em;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.title-conference {
+    color: #2e236c;
+}
+
+.btn-main {
+    background-color: #2e236c !important;
+    color: #fff !important;
+}
+
+.card-fee {
+    background: linear-gradient(
+        0deg,
+        rgba(67, 61, 139, 1) 50%,
+        rgba(82, 20, 118, 1) 100%
+    );
+    border-radius: 8px;
+    padding: 20px;
+}
+
+@media only screen and (min-width: 992px) {
 }
 
 @media only screen and (max-width: 600px) {
@@ -86,5 +183,29 @@
     h5.sponsor {
         font-size: 15px;
         padding-bottom: 10px;
+    }
+
+    .call-papers {
+        flex-direction: column;
+    }
+
+    .login-right {
+        background: #281d64;
+        border-radius: 0px;
+        height: 100vh;
+    }
+
+    .login-left {
+        display: none;
+    }
+
+    .form-login {
+        margin-top: 170px;
+        padding: 0 10em;
+    }
+
+    .form-login {
+        margin-top: 170px;
+        padding: 0 2em;
     }
 }
