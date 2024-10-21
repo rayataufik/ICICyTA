@@ -50,7 +50,7 @@
     border: none !important;
 }
 
-.call-for-papers img {
+.call-for-papers .card-papers {
     margin-top: 25%;
 }
 .call-for-papers h1 {
@@ -132,16 +132,114 @@
 .btn-main {
     background-color: #2e236c !important;
     color: #fff !important;
+    border-radius: 20px !important;
 }
 
 .card-fee {
     background: linear-gradient(
         0deg,
         rgba(67, 61, 139, 1) 50%,
-        rgba(82, 20, 118, 1) 100%
+        rgba(18, 16, 37, 1) 100%
     );
     border-radius: 8px;
     padding: 20px;
+}
+
+.call-for-papers {
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(42, 30, 112, 1) 100%
+    );
+    color: white;
+}
+
+.for-author {
+    background: linear-gradient(
+        0deg,
+        rgba(42, 30, 112, 1) 0%,
+        rgba(255, 255, 255, 1) 100%
+    );
+}
+
+.registration {
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(42, 30, 112, 1) 100%
+    );
+}
+
+.map-responsive {
+    position: relative;
+    overflow: hidden;
+    padding-top: 70%; /* 70% of the width for height */
+}
+.map-responsive iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+footer {
+    background-color: #140c40;
+    color: white;
+    padding: 50px;
+    margin-top: 100px;
+}
+
+trix-toolbar [data-trix-button-group="file-tools"] {
+    display: none !important;
+}
+
+.social-media i {
+    font-size: 2.5em;
+}
+
+.supported {
+    background-color: white;
+    margin-top: 50px;
+    color: black;
+}
+
+.supported h4 {
+    margin-top: -30px;
+}
+
+.supported img {
+    max-height: 100px;
+    margin: 0 15px;
+}
+
+.sponsor-logo img {
+    max-height: 90px;
+    margin: 0 15px;
+}
+
+#sidebar {
+    position: fixed; /* Membuat sidebar fixed */
+    top: 0;
+    left: 0;
+    height: 100vh; /* Mengatur tinggi sidebar agar mencakup seluruh tinggi viewport */
+    width: 280px; /* Lebar sidebar tetap */
+    background-color: #f8f9fa; /* Warna background sidebar */
+    overflow-y: auto;
+}
+
+.sidebar-m {
+    margin-left: 280px;
+}
+@media (max-width: 768px) {
+    #sidebar {
+        transform: translateX(-100%);
+        position: absolute;
+    }
+    #sidebar.show {
+        transform: translateX(0);
+    }
 }
 
 @media only screen and (min-width: 992px) {
@@ -207,5 +305,19 @@
     .form-login {
         margin-top: 170px;
         padding: 0 2em;
+    }
+
+    .sidebar-m {
+        margin-left: 0px;
+    }
+
+    .call-for-papers h1 {
+        margin-left: 0px;
+        text-align: center;
+    }
+
+    .call-papers p {
+        padding-right: 12px;
+        padding-left: 12px;
     }
 }

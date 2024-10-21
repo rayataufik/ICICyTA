@@ -9,12 +9,12 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="#">About Conference</a>
-        <a class="nav-link" href="#">Call For Paper</a>
-        <a class="nav-link" href="#">Speakers</a>
-        <a class="nav-link" href="#">Committee</a>
-        <a class="nav-link" href="#">For Authors</a>
-        <a class="nav-link" href="#">Registration</a>
+        <a class="nav-link" href="#about">About Conference</a>
+        <a class="nav-link" href="#speakers">Speakers</a>
+        <a class="nav-link" href="#call-for-papers">Call For Paper</a>
+        <a class="nav-link" href="#for-author">For Authors</a>
+        <a class="nav-link" href="#registration">Registration</a>
+        <a class="nav-link" href="#commitee">Committee</a>
       </div>
     </div>
   </div>
