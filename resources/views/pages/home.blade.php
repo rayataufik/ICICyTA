@@ -10,17 +10,24 @@
     <div class="container text-white">
       <div data-aos="fade-right" data-aos-duration="1500">
         <div class="title">
-          <h1 class="display-4">The 4<sup>th</sup> International Conference on <br>
-            Intelligent Cybernetics Technology <br>
-            & Applications 2024 (ICICyTA)</h1>
+          @if($heroSection)
+          <div class="row">
+            <div class="col-md-8">
+              <h1 class="display-4">{{$heroSection->conference_title}}</h1>
+            </div>
+          </div>
         </div>
         <div class="event-date-time mt-5">
           <div class="location-date">
-            <h6 class="event-date">DEC 17-19, 2024 - A HYBRID INTERNATIONAL CONFERENCE (BALI INDONESIA)</h6>
+            <h6 class="event-date">
+              {{ \Carbon\Carbon::parse($heroSection->start_date)->format('M d') }}-{{ \Carbon\Carbon::parse($heroSection->end_date)->format('d, Y') }}
+              - {{ $heroSection->location }}
+            </h6>
           </div>
+          @endif
           <div class="couterdown-event">
             <h6 class="mt-3 lead">Countdown to the event:</h6>
-            <div class="mt-3 event-time-countdown d-flex">
+            <div id="countdown" class="mt-3 event-time-countdown d-flex">
               <div class="c-square text-center" id="c-days"></div>
               <div class="c-square text-center ms-4" id="c-hours"></div>
               <div class="c-square text-center ms-4" id="c-minutes"></div>
@@ -32,38 +39,39 @@
       <div class="mt-5">
         <h6 class="lead">Submit Your Paper Here: <a class="btn btn-submit-paper" href="https://edas.info/newPaper.php?c=32282" target="_blank" role="button">EDAS</a></h6>
       </div>
+      @if($heroSection && $heroSection->sponsors->count() > 0)
       <div class="container position-absolute z-1" style="bottom: -130px; right:0; left:0;">
         <div class="mt-4 mb-5 p-4 sponsor-section text-white rounded">
           <h5 class="sponsor">Sponsored By:</h5>
           <div class="row justify-content-center sponsor-logo">
+            @foreach($heroSection->sponsors as $sponsor)
             <div class="col-md-2 col text-center">
-              <img class="img-fluid" src="images/logo-humic.png" alt="Sponsor 1 Logo">
+              <img class="img-fluid" src="{{ asset('storage/' . $sponsor->sponsor_image) }}" alt="Sponsor Logo">
             </div>
-            <div class="col-md-2 col text-center">
-              <img class="img-fluid" src="images/ieeefix.png" alt="Sponsor 2 Logo">
-            </div>
+            @endforeach
           </div>
         </div>
       </div>
+      @endif
     </div>
-  </div>
   </div>
 </section>
 
 <section id="about" class="about">
-  <div class="bg-image position-relative" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),
-    url('images/conference.jpg') no-repeat center center;
-      background-size: cover;
-      padding-top: 200px; padding-bottom: 200px">
+  @if ($aboutSection)
+  <div class="bg-image position-relative" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('{{ asset('storage/' . $aboutSection->image) }}') no-repeat center center;
+    background-size: cover;
+    padding-top: 200px; 
+    padding-bottom: 200px;">
     <div class="container text-white text-center" data-aos="fade-up" data-aos-delay="0">
       <div class="mt-5">
-        <h1 class="title display-4">What is ICICyTA 2024?</h1>
-        <p class="lead mt-3">The 4th International Conference on Intelligent Cybernetics Technology & Applications 2024 (ICICyTA 2024)
-          with theme "From Data to Decisions: Cybernetics and Intelligent Systems in Healthcare, IoT, and Business" will be held on December 17-19, 2024 at Bali Indonesia.
-          This is a hybrid (onsite and online) conference which is organized by Human Centric Engineering, Telkom University (Tel-U) and Bali International University (UNBI).</p>
+        <h1 class="title display-4">{{$aboutSection->title}}</h1>
+        <div class="lead mt-3">{!! $aboutSection->description !!}</div>
       </div>
     </div>
   </div>
+  @endif
 </section>
 
 <section id="speakers" class="speakers">
@@ -76,51 +84,19 @@
         <h1 class="title display-6">Conference Speakers</h1>
       </div>
       <div class="row justify-content-between my-5">
+        @if ($SpeakersSection->isNotEmpty())
+        @foreach ($SpeakersSection as $speakers)
         <div class="col-md-2 col-6 mb-5">
           <div class="card card-speaker">
-            <img src="images/kazutakaa.png" class="card-img-top" alt="...">
+            <img src="{{ asset('storage/' . $speakers->image) }}" class="card-img-top" alt="...">
             <div class="text-white">
-              <h5 class="card-title mt-3">Prof. Kazutaka SHIMADA</h5>
-              <p class="card-text">Professor in Multi-Modal interpretation, Image processing and Natural Language Processing at Kyushu Institute of Technology, Japan</p>
+              <h5 class="card-title mt-3">{{$speakers->name}}</h5>
+              <p class="card-text">{{$speakers->description}}</p>
             </div>
           </div>
         </div>
-        <div class="col-md-2 col-6 mb-5">
-          <div class="card card-speaker">
-            <img src="images/Komang.png" class="card-img-top" alt="...">
-            <div class="text-white">
-              <h5 class="card-title mt-3">Prof. Ts. Dr. Sazilah Salam</h5>
-              <p class="card-text">Professor of ICT in Economic and Tourism at Bali Internasional University, Indonesia.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2 col-6 mb-5">
-          <div class="card card-speaker">
-            <img src="images/sazilah.png" class="card-img-top" alt="...">
-            <div class="text-white">
-              <h5 class="card-title mt-3">Prof. Ts. Dr. Sazilah Salam</h5>
-              <p class="card-text">Prof of Multimedia, MOOCs, gamification, education technology and serious games at UTEM Malaysia.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2 col-6 mb-5">
-          <div class="card card-speaker">
-            <img src="images/cihangirnew.jpg" class="card-img-top" alt="...">
-            <div class="text-white">
-              <h5 class="card-title mt-3">Assoc. Prof. Dr. Cihangir Tezcan</h5>
-              <p class="card-text">Assistant Professor at Department of Cyber Security, Informatics Institute, Middle East Technical University (METU) at Ankara, Turkey.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2 col-6 mb-5">
-          <div class="card card-speaker">
-            <img src="images/Satria-Mandala.png" class="card-img-top" alt="...">
-            <div class="text-white">
-              <h5 class="card-title mt-3">Assoc. Prof. Satria Mandala, Ph.D</h5>
-              <p class="card-text">Associate Professor of Telemedicine System & Artificial Intelligence, and Director of Research Center for Human Centric Engineering at Telkom University, Indonesia.</p>
-            </div>
-          </div>
-        </div>
+        @endforeach
+        @endif
       </div>
     </div>
   </div>
@@ -134,10 +110,10 @@
         <div class="card card-papers">
           <div class="card-body text-center">
             <img src="images/ikontracks.png" alt="" srcset="">
-            <h2 class="mt-2 title-conference">Conference Tracks</h2>
+            <h2 class="mt-2 title-conference">{{ $cfps->title }}</h2>
             <div class="d-grid gap-2 d-md-block mt-3">
-              <button class="btn btn-main" type="button">Download CFP</button>
-              <button class="btn btn-main" type="button">Download Tour Poster</button>
+              <button class="btn btn-main-cfp" type="button" data-bs-toggle="modal" data-bs-target="#cfp">Download CFP</button>
+              <button class="btn btn-main-cfp" type="button" data-bs-toggle="modal" data-bs-target="#cfp-tour">Download Tour Poster</button>
             </div>
           </div>
         </div>
@@ -160,6 +136,7 @@
   <div class="container card-for-papers">
     <div class="position-relative">
       <div class="row">
+        @foreach ($contents as $content)
         <div class="col-md-6 mb-5">
           <div class="card">
             <div class="card-body">
@@ -168,89 +145,85 @@
                   <img src="images/cybermed.png" alt="" style="width: 90px;">
                 </div>
               </div>
-              <h5 class="card-title text-center mt-4">Cybernetics & Biomedical Engineering</h5>
-              <p class="card-text">Data Mining for Software Engineering, Requirement Engineering and Software Produce Line Engineering</p>
+              <h5 class="card-title text-center mt-4">{{ $content->title_content }}</h5>
+              <div class="card-text">
+                <ul>
+                  @php
+                  $dom = new DOMDocument();
+                  $dom->loadHTML('<ul>' . $content->description_content . '</ul>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+                  $listItems = $dom->getElementsByTagName('li');
+                  $limit = 3; // Number of items to display
+                  @endphp
+
+                  @for ($i = 0; $i < $listItems->length && $i < $limit; $i++)
+                      <li>{!! $listItems->item($i)->textContent !!}</li>
+                      @endfor
+
+                      @if ($listItems->length > $limit)
+                      <li>....</li>
+                      @endif
+                </ul>
+              </div>
               <div class="text-end">
-                <button type="button" class="btn btn-main" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <button type="button" class="btn btn-main" data-bs-toggle="modal" data-bs-target="#{{$content->id}}">
                   Read More
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-md-6 mb-5">
-          <div class="card">
-            <div class="card-body">
-              <div class="position-absolute text-center z-1" style="top: -50px; width:fit-content; left: 50%; transform: translateX(-50%);">
-                <div class="bg-title p-2 text-white rounded">
-                  <img src="images/cybermed.png" alt="" style="width: 90px;">
-                </div>
-              </div>
-              <h5 class="card-title text-center mt-4">Cybernetics & Management in Business</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <div class="text-end">
-                <button type="button" class="btn btn-main" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                  Read More
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 mb-5">
-          <div class="card">
-            <div class="card-body">
-              <div class="position-absolute text-center z-1" style="top: -50px; width:fit-content; left: 50%; transform: translateX(-50%);">
-                <div class="bg-title p-2 text-white rounded">
-                  <img src="images/cybermed.png" alt="" style="width: 90px;">
-                </div>
-              </div>
-              <h5 class="card-title text-center mt-4">Cybernetics & Management in Business</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <div class="text-end">
-                <button type="button" class="btn btn-main" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                  Read More
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 mb-5">
-          <div class="card">
-            <div class="card-body">
-              <div class="position-absolute text-center z-1" style="top: -50px; width:fit-content; left: 50%; transform: translateX(-50%);">
-                <div class="bg-title p-2 text-white rounded">
-                  <img src="images/cybermed.png" alt="" style="width: 90px;">
-                </div>
-              </div>
-              <h5 class="card-title text-center mt-4">Cybernetics & Management in Business</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <div class="text-end">
-                <button type="button" class="btn btn-main" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                  Read More
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        @endforeach
       </div>
     </div>
   </div>
 </section>
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="cfp" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">{{$cfps->cfp_title}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img src="{{ asset('storage/' . $cfps->cfp_image) }}" alt="{{$cfps->cfp_title}}" class="img-fluid">
+        <div class="mt-3">
+          {!! $cfps->cfp_description !!}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="cfp-tour" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">{{$cfps->tour_title}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img src="{{ asset('storage/' . $cfps->tour_poster) }}" alt="{{$cfps->cfp_title}}" class="img-fluid">
+      </div>
+    </div>
+  </div>
+</div>
+
+@foreach ($contents as $content)
+<div class="modal fade" id="{{$content->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <h2 class="fs-5 text-center">Cybernetics & Biomedical Engineering</h2>
-        <p class="mt-3">Data Mining for Software Engineering, Requirement Engineering and Software Produce Line Engineering</p>
+        <h2 class="fs-5 text-center">{{$content->title_content}}</h2>
+        <p class="mt-3">{!! $content->description_content !!}</p>
       </div>
     </div>
   </div>
 </div>
+@endforeach
 
 <section id="for-author" class="for-author">
   <div class="container">
@@ -658,5 +631,37 @@
 
 <script>
   AOS.init();
+
+  var eventStartDate = new Date("{{ $heroSection ? \Carbon\Carbon::parse($heroSection->start_date)->format('Y/m/d H:i:s') : '' }}").getTime();
+  var eventEndDate = new Date("{{ $heroSection ? \Carbon\Carbon::parse($heroSection->end_date)->format('Y/m/d H:i:s') : '' }}").getTime();
+
+  console.log("Start Date: ", new Date(eventStartDate));
+  console.log("End Date: ", new Date(eventEndDate));
+
+  var countdown = setInterval(function() {
+    var now = new Date().getTime();
+
+    var distanceToStart = eventStartDate - now;
+    var distanceToEnd = eventEndDate - now;
+
+    var days = Math.floor(distanceToStart / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distanceToStart % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distanceToStart % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distanceToStart % (1000 * 60)) / 1000);
+
+    if (distanceToStart > 0) {
+      document.getElementById("c-days").innerHTML = days + "<div class='small-text'>Days</div>";
+      document.getElementById("c-hours").innerHTML = hours + "<div class='small-text'>Hours</div>";
+      document.getElementById("c-minutes").innerHTML = minutes + "<div class='small-text'>Minutes</div>";
+      document.getElementById("c-seconds").innerHTML = seconds + "<div class='small-text'>Seconds</div>";
+    } else if (now >= eventStartDate && now <= eventEndDate) {
+      clearInterval(countdown);
+      document.getElementById("countdown").innerHTML = "<h1 class='display-4'>Today is The Day!</h1>";
+    } else if (distanceToEnd < 0) {
+      clearInterval(countdown);
+      document.getElementById("countdown").innerHTML = "<h1 class='display-4'>Event has Ended</h1>";
+    }
+
+  }, 1000);
 </script>
 @stop

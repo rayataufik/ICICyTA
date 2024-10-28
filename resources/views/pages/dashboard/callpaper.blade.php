@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container mb-5">
   <h1 class="display-4">Call for Paper</h1>
   <hr>
   <div class="tabs">
@@ -28,64 +28,82 @@
     </ul>
   </div>
 
-  <div id="Title" class="tabcontent mt-3">
-    <h3>Title Call For Papers</h3>
-    <form action="">
-      <label for="InputLink" class="form-label mt-3">Input Title Call For Papers</label>
+  <form action="{{ route('dashboard.callpaper.update', $callPaper->id) }}" method="post" enctype="multipart/form-data">
+    @csrf
+    @method('POST')
+    <div id="Title" class="tabcontent mt-3">
+      <h3>Title Call For Papers</h3>
+      <label for="InputTitle" class="form-label mt-3">Input Title Call For Papers</label>
       <div class="row">
         <div class="col-md-5 d-flex">
-          <input type="text" class="form-control me-3" id="InputLink" disabled>
-          <button type="button" class="btn btn-success me-2" onclick="enableInput('InputLink', 'submitLink')">Edit</button>
+          <input type="text" class="form-control me-3" id="InputTitle" name="title" value="{{ $callPaper->title }}" disabled>
+          <button type="button" class="btn btn-success me-2" onclick="enableInput('InputTitle', 'submitLink')">Edit</button>
           <button type="submit" class="btn btn-primary" id="submitLink" disabled>Submit</button>
         </div>
       </div>
-    </form>
-  </div>
+    </div>
 
-  <div id="Description" class="tabcontent mt-3">
-    <h3>Description Call For Papers</h3>
-    <form action="">
-      <label for="InputTitle" class="form-label mt-3">Description Call For Papers</label>
-      <input id="x" type="hidden" name="content">
-      <trix-editor input="x" id="editor" contenteditable="false"></trix-editor>
+    <div id="Description" class="tabcontent mt-3">
+      <h3>Description Call For Papers</h3>
+      <label for="InputDescription" class="form-label mt-3">Description Call For Papers</label>
+      <input id="InputDescription" type="hidden" name="description" value="{{ $callPaper->description }}">
+      <trix-editor input="InputDescription" id="editor" contenteditable="false"></trix-editor>
       <button type="button" class="btn btn-success mt-3" id="editButton" onclick="enableEditor()">Edit</button>
       <button type="submit" class="btn btn-primary mt-3" id="submitButton" disabled>Submit</button>
-    </form>
-  </div>
+    </div>
 
-  <div id="Cfp" class="tabcontent mt-3">
-    <h3>CFP Call For Papers</h3>
-    <form action="">
+    <div id="Cfp" class="tabcontent mt-3">
+      <h3>CFP Call For Papers</h3>
       <div class="mb-3">
-        <label for="InputName" class="form-label">Title</label>
-        <input type="text" class="form-control" id="InputNameCfp" disabled>
+        <label for="InputTitleCfp" class="form-label">Title</label>
+        <input type="text" class="form-control" id="InputTitleCfp" name="cfp_title" value="{{ $callPaper->cfp_title }}" disabled>
+      </div>
+      <div class=" mb-3">
+        <input id="EditorCfp" type="hidden" name="cfp_description" value="{{ $callPaper->cfp_description }}">
+        <trix-editor input="EditorCfp" id="editorCfp" contenteditable="false"></trix-editor>
       </div>
       <div class="mb-3">
-        <input id="x" type="hidden" name="content">
-        <trix-editor input="x" id="editorCfp" contenteditable="false"></trix-editor>
+        <label for="InputImageCfp" class="form-label">Image</label>
+        <input class="form-control" type="file" id="InputImageCfp" name="cfp_image" disabled>
+        @if ($callPaper->cfp_image)
+        <img class="mt-2" src="{{ asset('storage/' . $callPaper->cfp_image) }}" alt="Current Image" width="300" class="mt-2">
+        @endif
       </div>
-      <div class="mb-3">
-        <label for="InputImage" class="form-label">Image</label>
-        <input class="form-control" type="file" id="InputImageCfp" disabled>
-      </div>
-      <button type="button" class="btn btn-success mt-3" onclick="enableForm('InputNameCfp', 'InputImageCfp', 'editorCfp', 'submitButtonCfp')">Edit</button>
+      <button type="button" class="btn btn-success mt-3" onclick="enableForm('InputTitleCfp', 'InputImageCfp', 'editorCfp', 'submitButtonCfp')">Edit</button>
       <button type="submit" class="btn btn-primary mt-3" id="submitButtonCfp" disabled>Submit</button>
-    </form>
-  </div>
+    </div>
 
-  <div id="TourPoster" class="tabcontent mt-3">
-    <h3>Tour Poster</h3>
-    <form action="">
+    <div id="TourPoster" class="tabcontent mt-3">
+      <h3>Tour Poster</h3>
+      <label for="InputTitletour" class="form-label mt-3">Input Title Tour Poster</label>
+      <input type="text" class="form-control me-3" id="InputTitletour" name="tour_title" value="{{ $callPaper->tour_title }}" disabled>
       <label for="InputImage" class="form-label mt-3">Upload Tour Poster</label>
       <div class="row">
         <div class="col-md-5 d-flex">
-          <input type="file" class="form-control me-3" id="InputImage" disabled>
-          <button type="button" class="btn btn-success me-2" onclick="enableInput('InputImage', 'submitImage')">Edit</button>
+          <input type="file" class="form-control me-3" id="InputImage" name="tour_poster" disabled>
+          <button type="button" class="btn btn-success me-2" onclick="enableInput('InputTitletour', 'InputImage', 'submitImage')">Edit</button>
           <button type="submit" class="btn btn-primary" id="submitImage" disabled>Submit</button>
         </div>
       </div>
-    </form>
-  </div>
+      @if ($callPaper->tour_poster)
+      <img class="mt-2" src="{{ asset('storage/' . $callPaper->tour_poster) }}" alt="Current Image" width="300" class="mt-2">
+      @endif
+    </div>
+
+    <div id="AddContent" class="tabcontent mt-3">
+      <h3>Upload Content</h3>
+      <hr>
+      <div class="mb-3">
+        <label for="InputTitle" class="form-label">Title</label>
+        <input type="text" class="form-control" id="InputTitleContent" name="title_content">
+      </div>
+      <div class="mb-3">
+        <input id="contentDescription" type="hidden" name="description_content">
+        <trix-editor input="contentDescription" id="editorContent"></trix-editor>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3" id="submitButtonContent">Submit</button>
+    </div>
+  </form>
 
   <div id="ListContent" class="tabcontent mt-3">
     <h3>List Content</h3>
@@ -100,40 +118,45 @@
         </tr>
       </thead>
       <tbody>
+        @foreach ($contents as $index => $content)
         <tr>
-          <th scope="row">1</th>
-          <td>Cybernetics & Biomedical Engineering
-          </td>
-          <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus, sed?</td>
+          <th scope="row">{{ $index + 1 }}</th>
+          <td>{{ $content->title_content }}</td>
+          <td>{!! $content->description_content !!}</td>
           <td>
-            <a href="/dashboard/call-for-papers/content/edit" class="badge text-bg-warning me-2">Edit</a>
-            <a href="/delete/speaker" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+            <a href="{{ route('dashboard.callpaper.editContent', $content->id) }}" class="badge text-bg-warning me-2">Edit</a>
+            <form action="{{ route('dashboard.callpaper.deleteContent', $content->id) }}" method="POST" style="display: inline;">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+            </form>
           </td>
         </tr>
+        @endforeach
       </tbody>
     </table>
   </div>
 
-  <div id="AddContent" class="tabcontent mt-3">
-    <h3>Upload Content</h3>
-    <hr>
-    <form action="">
-      <div class="mb-3">
-        <label for="InputTitle" class="form-label">Title</label>
-        <input type="text" class="form-control" id="InputTitleContent" disabled>
-      </div>
-      <div class="mb-3">
-        <input id="x" type="hidden" name="content">
-        <trix-editor input="x" id="editorContent" contenteditable="false"></trix-editor>
-      </div>
-      <button type="button" class="btn btn-success mt-3" onclick="enableForm('InputTitleContent', '', 'editorContent', 'submitButtonContent')">Edit</button>
-      <button type="submit" class="btn btn-primary mt-3" id="submitButtonContent" disabled>Submit</button>
-    </form>
-  </div>
+
 
 </div>
 
 <script>
+  function enableInput(inputId1, inputId2, submitButtonId) {
+    var input1 = document.getElementById(inputId1);
+    var input2 = document.getElementById(inputId2);
+    var submitButton = document.getElementById(submitButtonId);
+
+    if (input1.disabled) {
+      input1.disabled = false;
+    }
+    if (input2.disabled) {
+      input2.disabled = false;
+    }
+
+    submitButton.disabled = false;
+  }
+
   function enableForm(inputFieldId, fileFieldId, editorId, submitButtonId) {
     if (inputFieldId) document.getElementById(inputFieldId).disabled = false;
     if (fileFieldId) document.getElementById(fileFieldId).disabled = false;

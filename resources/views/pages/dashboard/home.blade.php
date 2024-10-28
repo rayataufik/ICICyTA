@@ -21,132 +21,126 @@
     </ul>
   </div>
 
-  <div id="Dates" class="tabcontent mt-3">
-    <h3>Date & Location</h3>
+  <form action="{{ route('dashboard.home.update', $heroSection->id) }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('POST')
 
-    <!-- Form untuk input date -->
-    <form action="">
+    <!-- Dates Section -->
+    <div id="Dates" class="tabcontent mt-3">
+      <h3>Date & Location</h3>
+      <label for="InputLocation" class="form-label mt-3">Input Location</label>
+      <input type="text" class="form-control" name="location" id="InputLocation" value="{{ $heroSection->location }}" disabled>
+      <div class="d-flex mt-3">
+        <button type="button" class="btn btn-success me-2" onclick="enableInput('InputLocation', 'submitLocation')">Edit</button>
+        <button type="submit" class="btn btn-primary" id="submitLocation" disabled>Submit</button>
+      </div>
       <label for="startDate" class="form-label mt-3">Select Date Range</label>
       <div class="row">
         <div class="col-md-6 d-flex">
-          <input type="date" class="form-control me-3" id="startDate" disabled>
+          <input type="date" class="form-control me-3" name="start_date" id="startDate" value="{{ $heroSection->start_date }}" disabled>
           <span class="align-self-center me-3">to</span>
-          <input type="date" class="form-control me-3" id="endDate" disabled>
+          <input type="date" class="form-control me-3" name="end_date" id="endDate" value="{{ $heroSection->end_date }}" disabled>
           <button type="button" class="btn btn-success me-2" onclick="enableInput('startDate', 'endDate', 'submitDate')">Edit</button>
           <button type="submit" class="btn btn-primary" id="submitDate" disabled>Submit</button>
         </div>
       </div>
-    </form>
 
-    <!-- Form untuk input location -->
-    <form action="">
-      <label for="InputLocation" class="form-label mt-3">Input Location</label>
-      <div class="row">
-        <div class="col-md-4 col-sm-12 d-flex flex-column flex-sm-row">
-          <input type="text" class="form-control me-3 mb-2 mb-sm-0" id="InputLocation" disabled>
-          <div class="d-flex">
-            <button type="button" class="btn btn-success me-2" onclick="enableInput('InputLocation', 'submitLocation')">Edit</button>
-            <button type="submit" class="btn btn-primary" id="submitLocation" disabled>Submit</button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
 
-  <div id="Conference" class="tabcontent mt-3">
-    <h3>Conference Title</h3>
-    <form action="">
+    </div>
+
+    <!-- Conference Section -->
+    <div id="Conference" class="tabcontent mt-3">
+      <h3>Conference Title</h3>
       <label for="InputTitle" class="form-label mt-3">Input Title</label>
-      <input id="x" type="hidden" name="content">
-      <trix-editor input="x" id="editor" contenteditable="false"></trix-editor>
+      <input type="text" class="form-control" name="conference_title" id="InputTitle" value="{{ $heroSection->conference_title }}" disabled>
       <div class="mt-3">
-        <button type="button" class="btn btn-success" id="editButton" onclick="enableEditor()">Edit</button>
-        <button type="submit" class="btn btn-primary" id="submitButton" disabled>Submit</button>
+        <button type="button" class="btn btn-success me-2" onclick="enableInput('InputTitle', 'submitTitle')">Edit</button>
+        <button type="submit" class="btn btn-primary" id="submitTitle" disabled>Submit</button>
       </div>
-    </form>
-  </div>
+    </div>
 
+
+
+    <!-- EDAS Section -->
+    <div id="Edas" class="tabcontent mt-3">
+      <h3>EDAS</h3>
+      <label for="InputLink" class="form-label">Input Link Edas</label>
+      <input type="text" class="form-control" name="edas_link" id="InputLink" value="{{ $heroSection->edas_link }}" disabled>
+      <div class="d-flex mt-3">
+        <button type="button" class="btn btn-success me-2" onclick="enableInput('InputLink', 'submitLink')">Edit</button>
+        <button type="submit" class="btn btn-primary" id="submitLink" disabled>Submit</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Sponsor Section -->
   <div id="Sponsor" class="tabcontent mt-3">
     <h3>Sponsor Image</h3>
-    <form action="">
-      <label for="InputImage" class="form-label mt-3">Input Sponsor Image</label>
-      <div class="row">
-        <div class="col-md-5 col-sm-12 d-flex flex-column flex-sm-row">
-          <input type="file" class="form-control me-3 mb-2 mb-sm-0" id="InputImage" disabled>
-          <div class="d-flex">
-            <button type="button" class="btn btn-success me-2" onclick="enableInput('InputImage', 'submitImage')">Edit</button>
-            <button type="submit" class="btn btn-primary" id="submitImage" disabled>Submit</button>
-          </div>
-        </div>
+    <form action="{{ route('dashboard.home.update', $heroSection->id) }}" method="POST" enctype="multipart/form-data">
+      @csrf
+      @method('POST')
+      <input type="file" class="form-control me-3 mb-2 mb-sm-0" name="sponsor_image" id="InputImage">
+      <div class="d-flex mt-3">
+        <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </form>
+
     <hr>
-    <h3>List Sponsor</h3>
+    <h3>List Sponsors</h3>
     <div class="row">
+      @foreach ($heroSection->sponsors as $sponsor)
       <div class="col-md-3 col-sm-6">
         <div class="card text-end" style="width: 100%;">
-          <img src="/images/logo-humic.png" class="card-img-top" alt="...">
+          <img src="{{ asset('storage/' . $sponsor->sponsor_image) }}" class="card-img-top" alt="Sponsor Image">
           <div class="card-body">
-            <a href="#" class="btn btn-danger mt-3">Delete</a>
+            <form action="{{ route('dashboard.home.deleteSponsor', $sponsor->id) }}" method="POST" style="display:inline-block;">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-danger mt-3">Delete</button>
+            </form>
           </div>
         </div>
       </div>
+      @endforeach
     </div>
   </div>
 
-  <div id="Edas" class="tabcontent mt-3">
-    <h3>EDAS</h3>
-    <form action="">
-      <label for="InputLink" class="form-label mt-3">Input Link Edas</label>
-      <div class="row">
-        <div class="col-md-4 col-sm-12 d-flex flex-column flex-sm-row">
-          <input type="text" class="form-control me-3 mb-2 mb-sm-0" id="InputLink" disabled>
-          <div class="d-flex">
-            <button type="button" class="btn btn-success me-2" onclick="enableInput('InputLink', 'submitLink')">Edit</button>
-            <button type="submit" class="btn btn-primary" id="submitLink" disabled>Submit</button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-
-<script>
-  function enableInput(startInputId, endInputId, submitButtonId) {
-    document.getElementById(startInputId).disabled = false;
-    document.getElementById(endInputId).disabled = false;
-    document.getElementById(submitButtonId).disabled = false;
-  }
-
-  document.addEventListener("DOMContentLoaded", function() {
-    openContent(null, 'Dates');
-  });
-
-  function openContent(evt, contentName) {
-    var i, tabcontent, tablinks;
-
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
+  <script>
+    function enableInput(startInputId, endInputId, submitButtonId) {
+      document.getElementById(startInputId).disabled = false;
+      document.getElementById(endInputId).disabled = false;
+      document.getElementById(submitButtonId).disabled = false;
     }
 
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
+    document.addEventListener("DOMContentLoaded", function() {
+      openContent(null, 'Dates');
+    });
 
-    if (contentName) {
-      document.getElementById(contentName).style.display = "block";
+    function openContent(evt, contentName) {
+      var i, tabcontent, tablinks;
 
-      if (evt) {
-        evt.currentTarget.className += " active";
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+
+      if (contentName) {
+        document.getElementById(contentName).style.display = "block";
+
+        if (evt) {
+          evt.currentTarget.className += " active";
+        } else {
+          document.getElementsByClassName("tablinks")[0].className += " active";
+        }
       } else {
+        document.getElementById("Dates").style.display = "block";
         document.getElementsByClassName("tablinks")[0].className += " active";
       }
-    } else {
-      document.getElementById("Dates").style.display = "block";
-      document.getElementsByClassName("tablinks")[0].className += " active";
     }
-  }
-</script>
-@stop
+  </script>
+  @stop

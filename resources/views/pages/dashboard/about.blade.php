@@ -18,68 +18,115 @@
     </ul>
   </div>
 
-  <div id="Title" class="tabcontent mt-3">
-    <h3>Title Conference</h3>
-    <form action="">
-      <label for="InputLink" class="form-label mt-3">Input Title Conference</label>
+  @if ($errors->any())
+  <div class="alert alert-danger mt-3">
+    <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+  @endif
+
+  <form action="{{ route('dashboard.about.update', $about->id) }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('POST')
+
+    <!-- Title Tab -->
+    <div id="Title" class="tabcontent mt-3">
+      <h3>Title Conference</h3>
+      <label for="InputTitle" class="form-label mt-3">Input Title Conference</label>
       <div class="row">
         <div class="col-md-5 d-flex">
-          <input type="text" class="form-control me-3" id="InputLink" disabled>
-          <button type="button" class="btn btn-success me-2" onclick="enableInput('InputLink', 'submitLink')">Edit</button>
-          <button type="submit" class="btn btn-primary" id="submitLink" disabled>Submit</button>
+          <input type="text" class="form-control me-3" name="title" id="InputTitle" value="{{ $about->title }}" disabled>
+          <button type="button" class="btn btn-success me-2" onclick="enableInput('InputTitle', 'submitTitle')">Edit</button>
+          <button type="submit" class="btn btn-primary" id="submitTitle" disabled>Submit</button>
         </div>
       </div>
-    </form>
-  </div>
+    </div>
 
-  <div id="Conference" class="tabcontent mt-3">
-    <h3>Conference Description</h3>
-    <form action="">
-      <label for="InputTitle" class="form-label mt-3">Conference Description</label>
-      <input id="x" type="hidden" name="content">
+    <!-- Conference Description Tab -->
+    <div id="Conference" class="tabcontent mt-3">
+      <h3>Conference Description</h3>
+      <label for="InputDescription" class="form-label mt-3">Conference Description</label>
+      <input id="x" type="hidden" name="description" value="{{ $about->description }}">
       <trix-editor input="x" id="editor" contenteditable="false"></trix-editor>
       <button type="button" class="btn btn-success mt-3" id="editButton" onclick="enableEditor()">Edit</button>
       <button type="submit" class="btn btn-primary mt-3" id="submitButton" disabled>Submit</button>
-    </form>
-  </div>
+    </div>
+  </form>
 
+  <!-- Background Image Tab -->
   <div id="image-conference" class="tabcontent mt-3">
     <h3>Background Image</h3>
-    <form action="">
-      <label for="InputImage" class="form-label mt-3">Input Background Image</label>
-      <div class="row">
-        <div class="col-md-5 d-flex">
-          <input type="file" class="form-control me-3" id="InputImage" disabled>
-          <button type="button" class="btn btn-success me-2" onclick="enableInput('InputImage', 'submitImage')">Edit</button>
-          <button type="submit" class="btn btn-primary" id="submitImage" disabled>Submit</button>
-        </div>
+
+
+    <div class="row">
+      <div class="col-md-7 d-flex">
+        <!-- Form element -->
+        <form action="{{ route('dashboard.about.update', $about->id) }}" method="POST" enctype="multipart/form-data" class="d-flex">
+          @csrf
+          @method('POST')
+
+          <div class="me-3">
+            <label for="InputImage" class="form-label mt-3">Input Background Image</label>
+            <input type="file" class="form-control" name="image" id="InputImage">
+          </div>
+
+          <div class="align-self-end">
+            <button type="submit" class="btn btn-primary" id="submitImage">Submit</button>
+          </div>
+        </form>
       </div>
-    </form>
+      @if ($about->image)
+      <form action="{{ route('dashboard.about.deleteImage', $about->id) }}" method="POST" style="display:inline-block;">
+        @csrf
+        @method('DELETE')
+        <div class="mt-3">
+          <div class="row">
+            <div class="col-md-3 col-sm-6">
+              <div class="card-header">
+                <div class="mb-2">Image Preview</div>
+                <img src="{{ asset('storage/' . $about->image) }}" class="card-img-top" alt="Sponsor Image">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      @endif
+    </div>
   </div>
 </div>
 
-
 <script>
+  function enableInput(inputId, submitButtonId) {
+    document.getElementById(inputId).disabled = false;
+    document.getElementById(submitButtonId).disabled = false;
+  }
+
+  function enableEditor() {
+    var editor = document.getElementById('editor');
+    editor.removeAttribute('contenteditable');
+    editor.setAttribute('contenteditable', true);
+    document.getElementById('submitButton').disabled = false;
+  }
+
   document.addEventListener("DOMContentLoaded", function() {
     openContent(null, 'Title');
   });
 
   function openContent(evt, contentName) {
     var i, tabcontent, tablinks;
-
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
     }
-
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-
     if (contentName) {
       document.getElementById(contentName).style.display = "block";
-
       if (evt) {
         evt.currentTarget.className += " active";
       } else {
