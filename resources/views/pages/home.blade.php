@@ -247,99 +247,33 @@
                 </tr>
               </thead>
               <tbody class="table-group-divider">
+                @foreach ($ImportantDates as $importantDate)
                 <tr>
-                  <td>Submission Deadline</td>
-                  <td>25 October 2024</td>
+                  <td>{{ $importantDate->important }}</td>
+                  <td>{{ \Carbon\Carbon::parse($importantDate->date)->format('d M Y') }}</td>
                 </tr>
-                <tr>
-                  <td>Notification of Acceptance</td>
-                  <td>25 November 2024</td>
-                </tr>
-                <tr>
-                  <td>Early Bird Registration Deadline with 5% discount</td>
-                  <td>20 November 2024</td>
-                </tr>
-                <tr>
-                  <td>Camera Ready</td>
-                  <td>30 November 2024</td>
-                </tr>
-                <tr>
-                  <td>Normal Registration deadline</td>
-                  <td>7 December 2024</td>
-                </tr>
-                <tr>
-                  <td>Conference Date</td>
-                  <td>17-18 Dec 2024</td>
-                </tr>
-                <tr>
-                  <td>One day tour</td>
-                  <td>19 Desember 2024</td>
-                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
         </div>
         <div class="row mt-4 justify-content-around">
+          @foreach ($ContentAuthors as $ContentAuthor)
           <div class="col-md-6 mb-5">
             <div class="card">
               <div class="card-body">
                 <div class="position-absolute text-center z-1" style="top: -20px; width:fit-content; left: 50%; transform: translateX(-50%);">
                   <div class="bg-title p-2 text-white rounded" style="background:#5B5195">
-                    Paper Preparation
+                    {{$ContentAuthor->title}}
                   </div>
                 </div>
-                <p class="card-text mt-4 mb-4">This is some text within a card body.</p>
+                <p class="card-text mt-4 mb-4">
+                  {!! $ContentAuthor->description !!}
+                </p>
               </div>
             </div>
           </div>
-          <div class="col-md-6 mb-5">
-            <div class="card">
-              <div class="card-body">
-                <div class="position-absolute text-center z-1" style="top: -20px; width:fit-content; left: 50%; transform: translateX(-50%);">
-                  <div class="bg-title p-2 text-white rounded" style="background:#5B5195">
-                    No-Show Policy
-                  </div>
-                </div>
-                <p class="card-text mt-4 mb-4">This is some text within a card body.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 mb-5">
-            <div class="card">
-              <div class="card-body">
-                <div class="position-absolute text-center z-1" style="top: -20px; width:fit-content; left: 50%; transform: translateX(-50%);">
-                  <div class="bg-title p-2 text-white rounded" style="background:#5B5195">
-                    PDF Express
-                  </div>
-                </div>
-                <p class="card-text mt-4 mb-4">This is some text within a card body.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 mb-5">
-            <div class="card">
-              <div class="card-body">
-                <div class="position-absolute text-center z-1" style="top: -20px; width:fit-content; left: 50%; transform: translateX(-50%);">
-                  <div class="bg-title p-2 text-white rounded" style="background:#5B5195">
-                    Past Event
-                  </div>
-                </div>
-                <p class="card-text mt-4 mb-4">This is some text within a card body.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 mb-5">
-            <div class="card">
-              <div class="card-body">
-                <div class="position-absolute text-center z-1" style="top: -20px; width:fit-content; left: 50%; transform: translateX(-50%);">
-                  <div class="bg-title p-2 text-white rounded" style="background:#5B5195">
-                    Event Schedule
-                  </div>
-                </div>
-                <p class="card-text mt-4 mb-4">This is some text within a card body.</p>
-              </div>
-            </div>
-          </div>
+          @endforeach
         </div>
       </div>
     </div>
@@ -348,180 +282,82 @@
 
 <section id="registration" class="registration">
   <div class="container">
-    <h1 class="title-registraton text-center mb-4 text-white pt-5">
+    <h1 class="title-registration text-center mb-4 text-white pt-5">
       Registration Fee
     </h1>
     <div class="row">
       <div class="col-md-6">
         <div class="row text-center">
+          @foreach ($RegistrationFees as $RegistrationFee)
           <div class="col-md-6 mb-4">
             <div class="card card-fee text-white">
               <div class="card-body">
-                <h5 class="card-title">International Presenter</h5>
-                <p class="card-text">IDR 3.000.000</p>
-                <p class="card-text">USD 200</p>
+                <h5 class="card-title">{{ $RegistrationFee->type }}</h5>
+                <p class="card-text">
+                  IDR {{ number_format($RegistrationFee->price_idr, 0, ',', '.') }} <br>
+                  USD {{ number_format($RegistrationFee->price_usd, 2) }}
+                </p>
               </div>
             </div>
           </div>
-          <div class="col-md-6 mb-4">
-            <div class="card card-fee text-white">
-              <div class="card-body">
-                <h5 class="card-title">International Presenter</h5>
-                <p class="card-text">IDR 3.000.000</p>
-                <p class="card-text">USD 200</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 mb-4">
-            <div class="card card-fee text-white">
-              <div class="card-body">
-                <h5 class="card-title">International Presenter</h5>
-                <p class="card-text">IDR 3.000.000</p>
-                <p class="card-text">USD 200</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 mb-4">
-            <div class="card card-fee text-white">
-              <div class="card-body">
-                <h5 class="card-title">International Presenter</h5>
-                <p class="card-text">IDR 3.000.000</p>
-                <p class="card-text">USD 200</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 mb-4">
-            <div class="card card-fee text-white">
-              <div class="card-body">
-                <h5 class="card-title">International Presenter</h5>
-                <p class="card-text">IDR 3.000.000</p>
-                <p class="card-text">USD 200</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 mb-4">
-            <div class="card card-fee text-white">
-              <div class="card-body">
-                <h5 class="card-title">International Presenter</h5>
-                <p class="card-text">IDR 3.000.000</p>
-                <p class="card-text">USD 200</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 mb-4">
-            <div class="card card-fee text-white">
-              <div class="card-body">
-                <h5 class="card-title">International Presenter</h5>
-                <p class="card-text">IDR 3.000.000</p>
-                <p class="card-text">USD 200</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 mb-4">
-            <div class="card card-fee text-white">
-              <div class="card-body">
-                <h5 class="card-title">International Presenter</h5>
-                <p class="card-text">IDR 3.000.000</p>
-                <p class="card-text">USD 200</p>
-              </div>
-            </div>
-          </div>
+          @endforeach
         </div>
       </div>
+
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <p class="card-text">Payment should be made after acceptance by Bank Transfer to “Bank Negara Indonesia (BNI) as below:</p>
-            <div class="accordion" id="accordionExample">
-              <h2 class="accordion-header mb-4 border">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseTwo">
-                  <div class="d-flex card-body align-items-center justify-content-between">
-                    <div class="bank-logo">
-                      <img src="images/va.png" alt="Virtual Account Logo">
-                    </div>
-                    <div class="bank-detail">
-                      Virtual Account
-                    </div>
-                    <div class="icon-chevron-right">
-                      <!-- @include('icons.chevron-right') -->
-                    </div>
-                  </div>
-                </button>
-              </h2>
-              <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  Virtual Account Number: 8321066202400048 <br>
-                  Account Holder Name: Telkom University <br>
-                  Description: ICICYTA 2024 <br>
-                  Bank Name: Bank Negara Indonesia (BNI) <br>
-                  Bank Branch: Perintis Kemerdekaan
-                </div>
-              </div>
-              <h2 class="accordion-header mb-4 border">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  <div class="d-flex card-body align-items-center justify-content-between">
-                    <div class="bank-logo">
-                      <img src="images/bank-tf.png" alt="Virtual Account Logo">
-                    </div>
-                    <div class="bank-detail">
-                      Bank Transfer
-                    </div>
-                    <div class="icon-chevron-right">
-                      <!-- @include('icons.chevron-right') -->
-                    </div>
-                  </div>
-                </button>
-              </h2>
-              <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  Bank Name: Bank Mandiri <br>
-                  Swift Code: BMRIIDJA <br>
-                  Beneficiary name/Recipient name: Universitas Telkom <br>
-                  Beneficiary Bank Account No: 1310095019917 <br>
-                  Branch: Bank Mandiri KCP Bandung Martadinata <br>
-                  Bank Address: Jl. R.E. Martadinata No.103. Kota Bandung, Jawa Barat, Indonesia 40115 City: Bandung <br>
-                  Country: Indonesia
-                </div>
-              </div>
-              <h2 class="accordion-header mb-4 border">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  <div class="d-flex card-body align-items-center justify-content-between">
-                    <div class="bank-logo">
-                      <img src="images/paypal.png" alt="Virtual Account Logo">
-                    </div>
-                    <div class="bank-detail">
-                      Paypal
-                    </div>
-                    <div class="icon-chevron-right">
-                      <!-- @include('icons.chevron-right') -->
-                    </div>
-                  </div>
-                </button>
-              </h2>
-              <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  Email: harry.gunawan.putu@gmail.com <br>
-                  Additional Important Information: <br>
+            <p class="card-text">
+              Payment should be made after acceptance by Bank Transfer to “Bank Negara Indonesia (BNI)” as below:
+            </p>
 
-                  Please transfer the full registration fee plus 5% PayPal Currency conversion fees to our account. <br>
-                  Please note that the fee must be transferred under the registrant's name and should be stated clearly on the payment slip. <br>
-                  Please include the paper ID information on the payment slip.
+            @foreach ($BankAccounts as $BankAccount)
+            <div class="accordion" id="accordionBank">
+              <div class="accordion-item mb-3">
+                <h2 class="accordion-header" id="heading{{ $BankAccount->id }}">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $BankAccount->id }}" aria-expanded="false" aria-controls="collapse{{ $BankAccount->id }}">
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="bank-logo">
+                        <img src="{{ asset('storage/' . $BankAccount->image) }}" alt="Virtual Account Logo" style="width: 50px;">
+                      </div>
+                      <div class="bank-detail">
+                        {{ $BankAccount->payment_method }}
+                      </div>
+                      <div class="icon-chevron-right">
+                        <!-- @include('icons.chevron-right') -->
+                      </div>
+                    </div>
+                  </button>
+                </h2>
+                <div id="collapse{{ $BankAccount->id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ $BankAccount->id }}" data-bs-parent="#accordionBank">
+                  <div class="accordion-body">
+                    {!! $BankAccount->description !!}
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="d-flex justify-content-center mt-4 mb-1">
-              <a class="btn btn-main" href="#" role="button">Registration Link</a>
-            </div>
+            @endforeach
+          </div>
+
+          <div class="d-flex justify-content-center mb-3">
+            <a class="btn btn-main" href="{{ $RegistrationLink->link }}" target="_blank" role="button">Registration Link</a>
           </div>
         </div>
-
-        <h6 class="mt-4">Payments marked * Include One Day Tour Voucher <br> If you require any price waiver, please feel free to get in touch with us <br>
-          at icicyta@telkomuniversity.ac.id <br><br>
-          For participants only <br> Please send proof of payment and full name to icicyta@telkomuniversity.ac.id</h6 class="mt-3">
+        <h6 class="mt-4">
+          Payments marked * Include One Day Tour Voucher. <br>
+          If you require any price waiver, please feel free to get in touch with us at
+          <a href="mailto:icicyta@telkomuniversity.ac.id">icicyta@telkomuniversity.ac.id</a><br><br>
+          For participants only: Please send proof of payment and full name to
+          <a href="mailto:icicyta@telkomuniversity.ac.id">icicyta@telkomuniversity.ac.id</a>
+        </h6>
       </div>
+
     </div>
+
+
   </div>
 </section>
+
 
 <section id="commitee" class="commitee">
   <div class="container">

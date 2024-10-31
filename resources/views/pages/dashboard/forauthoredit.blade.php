@@ -6,20 +6,19 @@
   <h1 class="display-4">Edit For Author Content</h1>
   <hr>
   <h3>Edit Content</h3>
-  <form>
+  <form action="{{ route('content.update', $content->id) }}" method="POST">
+    @csrf
+    @method('PUT')
     <div class="mb-3">
       <label for="title" class="form-label">Title</label>
-      <input type="text" class="form-control" id="title">
+      <input type="text" class="form-control" id="title" name="title" value="{{ $content->title }}">
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
-      <input id="description" type="hidden" name="description">
+      <input id="description" type="hidden" name="description" value="{{ $content->description }}">
       <trix-editor input="description" id="editor"></trix-editor>
     </div>
-    <div class="d-grid gap-2 d-md-block">
-      <button class="btn btn-primary" type="button">Back</button>
-      <button class="btn btn-primary" type="submit">Submit</button>
-    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
   </form>
 </div>
 

@@ -25,19 +25,20 @@
   <div id="List" class="tabcontent mt-3">
     <h3>List Registration Fee</h3>
     <hr>
-    <form>
+    <form action="{{ route('registration.store') }}" method="POST">
+      @csrf
       <div class="mb-3">
         <label for="type" class="form-label">Type</label>
-        <input type="text" class="form-control" id="type">
+        <input type="text" class="form-control" id="type" name="type">
       </div>
       <div class="row">
         <div class="col input-group mb-3">
           <div class="input-group-text">$</div>
-          <input type="number" class="form-control" id="priceUSD" placeholder="Price USD">
+          <input type="number" class="form-control" id="priceUSD" placeholder="Price USD" name="price_usd">
         </div>
         <div class="col input-group mb-3">
           <div class="input-group-text">Rp</div>
-          <input type="number" class="form-control" id="priceIDR" placeholder="Price IDR">
+          <input type="number" class="form-control" id="priceIDR" placeholder="Price IDR" name="price_idr">
         </div>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
@@ -55,14 +56,21 @@
         </tr>
       </thead>
       <tbody>
+        @foreach ($fees as $index => $fee)
         <tr>
-          <th scope="row">1</th>
-          <td>Regular</td>
-          <td>$100</td>
-          <td>Rp. 1.500.000</td>
-          <td><span class="badge text-bg-danger">Delete</span>
+          <th scope="row">{{ $index + 1 }}</th>
+          <td>{{ $fee->type }}</td>
+          <td>${{ number_format($fee->price_usd, 2) }}</td>
+          <td>Rp. {{ number_format($fee->price_idr, 0, ',', '.') }}</td>
+          <td>
+            <form action="{{ route('registration.delete', $fee->id) }}" method="POST" style="display: inline;">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+            </form>
           </td>
         </tr>
+        @endforeach
       </tbody>
     </table>
   </div>
@@ -81,16 +89,28 @@
         </tr>
       </thead>
       <tbody>
+        @foreach ($accounts as $index => $account)
         <tr>
-          <th scope="row">1</th>
-          <td><img src="/images/bank-tf.png" class="card-img-top" alt="..." style="width: 50px;"></td>
-          <td>Bank Transfer</td>
-          <td>Lorem ipsum dolor sit amet.</td>
+          <th scope="row">{{ $index + 1 }}</th>
           <td>
-            <a href="/dashboard/registration/bank-account/edit" class="badge text-bg-warning me-2">Edit</a>
-            <a href="/delete/speaker" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+            @if($account->image)
+            <img src="{{ asset('storage/' . $account->image) }}" class="card-img-top" alt="Bank Image" style="width: 50px;">
+            @else
+            <img src="/images/default-bank.png" class="card-img-top" alt="Default Image" style="width: 50px;">
+            @endif
+          </td>
+          <td>{{ $account->payment_method }}</td>
+          <td>{!! $account->description !!}</td>
+          <td>
+            <a href="{{ route('bank-account.edit', $account->id) }}" class="badge text-bg-warning me-2">Edit</a>
+            <form action="{{ route('bank-account.delete', $account->id) }}" method="POST" style="display:inline;">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+            </form>
           </td>
         </tr>
+        @endforeach
       </tbody>
     </table>
   </div>
@@ -98,19 +118,20 @@
   <div id="AddBank" class="tabcontent mt-3">
     <h3>Add Bank Account</h3>
     <hr>
-    <form>
+    <form action="{{ route('bank-account.store') }}" method="POST" enctype="multipart/form-data">
+      @csrf
       <div class="mb-3">
         <label for="paymentMethode" class="form-label">Payment Methode</label>
-        <input type="text" class="form-control" id="paymentMethode">
+        <input type="text" class="form-control" id="paymentMethode" name="payment_method">
       </div>
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <input id="description" type="hidden" name="content">
+        <input id="description" type="hidden" name="description">
         <trix-editor input="description" id="editor"></trix-editor>
       </div>
       <div class="mb-3">
         <label for="InputImage" class="form-label">Image</label>
-        <input class="form-control" type="file" id="InputImage">
+        <input class="form-control" type="file" id="InputImage" name="image">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -119,17 +140,19 @@
   <div id="RegistLink" class="tabcontent mt-3">
     <h3>Registration Link</h3>
     <hr>
-    <form>
+    <form action="{{ route('registration-link.store-or-update') }}" method="POST">
+      @csrf
       <div class="mb-3">
         <div class="row">
           <div class="col-md-4 col-sm-12 d-flex flex-column flex-sm-row">
-            <input type="text" class="form-control me-3 mb-2 mb-sm-0" id="InputLink" disabled>
+            <input type="text" class="form-control me-3 mb-2 mb-sm-0" name="link" id="InputLink" value="{{ $registrationLink->link ?? '' }}" disabled>
             <div class="d-flex">
               <button type="button" class="btn btn-success me-2" onclick="enableInput('InputLink', 'submitLink')">Edit</button>
               <button type="submit" class="btn btn-primary" id="submitLink" disabled>Submit</button>
             </div>
           </div>
         </div>
+      </div>
     </form>
   </div>
 

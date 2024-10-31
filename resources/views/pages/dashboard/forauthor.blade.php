@@ -21,14 +21,15 @@
 
   <div id="ImportantDate" class="tabcontent mt-3">
     <h3>Add Important Date</h3>
-    <form>
+    <form action="{{ route('important-date.store') }}" method="POST">
+      @csrf
       <div class="mb-3">
         <label for="important" class="form-label">Important</label>
-        <input type="text" class="form-control" id="important">
+        <input type="text" class="form-control" id="important" name="important">
       </div>
       <div class="mb-3">
         <label for="date" class="form-label">Date</label>
-        <input type="date" class="form-control" id="date">
+        <input type="date" class="form-control" id="date" name="date">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -43,12 +44,20 @@
         </tr>
       </thead>
       <tbody>
+        @foreach ($importantDates as $index => $importantDate)
         <tr>
-          <th scope="row">1</th>
-          <td>Submission Deadline</td>
-          <td>18 Agustus 2024</td>
-          <td><span class="badge text-bg-danger">Delete</span></td>
+          <th scope="row">{{ $index + 1 }}</th>
+          <td>{{ $importantDate->important }}</td>
+          <td>{{ \Carbon\Carbon::parse($importantDate->date)->format('d M Y') }}</td>
+          <td>
+            <form action="{{ route('important-date.delete', $importantDate->id) }}" method="POST" style="display:inline-block;">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+            </form>
+          </td>
         </tr>
+        @endforeach
       </tbody>
     </table>
   </div>
@@ -65,25 +74,32 @@
         </tr>
       </thead>
       <tbody>
+        @foreach ($contents as $index => $content)
         <tr>
-          <th scope="row">1</th>
-          <td>Paper Preparation</td>
-          <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis, ipsa.</td>
+          <th scope="row">{{ $index + 1 }}</th>
+          <td>{{ $content->title }}</td>
+          <td>{!! Str::limit($content->description, 100) !!}</td>
           <td>
-            <a href="/dashboard/for-author/content/edit" class="badge text-bg-warning me-2">Edit</a>
-            <a href="/delete/speaker" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+            <a href="{{ route('content.edit', $content->id) }}" class="badge text-bg-warning me-2">Edit</a>
+            <form action="{{ route('content.delete', $content->id) }}" method="POST" style="display:inline-block;">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+            </form>
           </td>
         </tr>
+        @endforeach
       </tbody>
     </table>
   </div>
 
   <div id="AddContent" class="tabcontent mt-3">
     <h3>Add Content</h3>
-    <form>
+    <form action="{{ route('content.store') }}" method="POST">
+      @csrf
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title">
+        <input type="text" class="form-control" id="title" name="title">
       </div>
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>

@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\About;
+use App\Models\Content;
 use App\Models\Speaker;
 use App\Models\CallPaper;
-use App\Models\Content;
+use App\Models\BankAccount;
 use App\Models\HeroSection;
 use Illuminate\Http\Request;
+use App\Models\ContentAuthor;
+use App\Models\ImportantDate;
+use App\Models\RegistrationFee;
+use App\Models\RegistrationLink;
 
 class HomeController extends Controller
 {
@@ -19,7 +24,23 @@ class HomeController extends Controller
         $SpeakersSection = Speaker::all();
         $cfps = CallPaper::first();
         $contents = Content::all();
+        $ImportantDates = ImportantDate::all();
+        $ContentAuthors = ContentAuthor::all();
+        $RegistrationFees = RegistrationFee::all();
+        $BankAccounts = BankAccount::all();
+        $RegistrationLink = RegistrationLink::first();
 
-        return view('pages.home', compact('heroSection', 'aboutSection', 'SpeakersSection', 'cfps', 'contents'));
+        return view('pages.home', compact(
+            'heroSection',
+            'aboutSection',
+            'SpeakersSection',
+            'cfps',
+            'contents',
+            'ImportantDates',
+            'ContentAuthors',
+            'RegistrationFees',
+            'BankAccounts',
+            'RegistrationLink'
+        ));
     }
 }

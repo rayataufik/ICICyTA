@@ -15,6 +15,9 @@
         <a class="nav-link" href="#for-author">For Authors</a>
         <a class="nav-link" href="#registration">Registration</a>
         <a class="nav-link" href="#commitee">Committee</a>
+        @auth
+        <a class="nav-link" href="dashboard/home">Dashboard</a>
+        @endauth
       </div>
     </div>
   </div>

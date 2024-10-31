@@ -4,9 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\CallPaperController;
 use App\Http\Controllers\HeroSectionController;
+use App\Http\Controllers\RegistrationFeeController;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
@@ -16,6 +18,7 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::prefix('dashboard/home')->name('dashboard.home.')->group(function () {
         Route::get('/', [HeroSectionController::class, 'index'])->name('index');
         Route::post('/{heroSection}', [HeroSectionController::class, 'update'])->name('update');
@@ -43,14 +46,23 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/content/{content}/edit', [CallPaperController::class, 'editContent'])->name('editContent');
         Route::put('/content/{content}', [CallPaperController::class, 'updateContent'])->name('updateContent');
     });
-});
 
-Route::get('/dashboard/for-author', function () {
-    return view('pages.dashboard.forauthor');
-});
+    Route::get('/dashboard/for-author', [AuthorController::class, 'index'])->name('for-author');
+    Route::post('/dashboard/for-author/important-date', [AuthorController::class, 'storeImportantDate'])->name('important-date.store');
+    Route::delete('/dashboard/for-author/important-date/{id}', [AuthorController::class, 'deleteImportantDate'])->name('important-date.delete');
+    Route::post('/dashboard/for-author/content', [AuthorController::class, 'storeContent'])->name('content.store');
+    Route::delete('/dashboard/for-author/content/{id}', [AuthorController::class, 'deleteContent'])->name('content.delete');
+    Route::get('/dashboard/for-author/content/edit/{id}', [AuthorController::class, 'editContent'])->name('content.edit');
+    Route::put('/dashboard/for-author/content/{id}', [AuthorController::class, 'updateContent'])->name('content.update');
 
-Route::get('/dashboard/registration', function () {
-    return view('pages.dashboard.registrationfee');
+    Route::get('/dashboard/registration', [RegistrationFeeController::class, 'index'])->name('registration');
+    Route::post('/dashboard/registration/fee', [RegistrationFeeController::class, 'storeRegistrationFee'])->name('registration.store');
+    Route::delete('/dashboard/registration/fee/{id}', [RegistrationFeeController::class, 'destroyRegistrationFee'])->name('registration.delete');
+    Route::post('/dashboard/registration/bank-account', [RegistrationFeeController::class, 'storeBankAccount'])->name('bank-account.store');
+    Route::get('/dashboard/registration/bank-account/edit/{id}', [RegistrationFeeController::class, 'editBankAccount'])->name('bank-account.edit');
+    Route::put('/dashboard/registration/bank-account/{id}', [RegistrationFeeController::class, 'updateBankAccount'])->name('bank-account.update');
+    Route::delete('/dashboard/registration/bank-account/{id}', [RegistrationFeeController::class, 'destroyBankAccount'])->name('bank-account.delete');
+    Route::post('/dashboard/registration/link', [RegistrationFeeController::class, 'storeOrUpdateLink'])->name('registration-link.store-or-update');
 });
 
 Route::get('/dashboard/commitee', function () {
