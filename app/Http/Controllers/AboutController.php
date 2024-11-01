@@ -32,7 +32,7 @@ class AboutController extends Controller
 
         $about->update($validated);
 
-        return redirect()->route('dashboard.about')->with('success', 'About conference updated successfully!');
+        return redirect()->back()->with('success', 'About conference updated successfully!');
     }
 
     public function destroyImage(About $about)
@@ -42,6 +42,6 @@ class AboutController extends Controller
             $about->update(['image' => null]);
         }
 
-        return redirect()->route('dashboard.about')->with('success', 'Image deleted successfully!');
+        return redirect()->back()->with('success', 'Image deleted successfully!');
     }
 }

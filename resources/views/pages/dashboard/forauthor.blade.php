@@ -21,7 +21,7 @@
 
   <div id="ImportantDate" class="tabcontent mt-3">
     <h3>Add Important Date</h3>
-    <form action="{{ route('important-date.store') }}" method="POST">
+    <form action="{{ route('for-author.important-date.store') }}" method="POST">
       @csrf
       <div class="mb-3">
         <label for="important" class="form-label">Important</label>
@@ -50,7 +50,7 @@
           <td>{{ $importantDate->important }}</td>
           <td>{{ \Carbon\Carbon::parse($importantDate->date)->format('d M Y') }}</td>
           <td>
-            <form action="{{ route('important-date.delete', $importantDate->id) }}" method="POST" style="display:inline-block;">
+            <form action="{{ route('for-author.important-date.delete', $importantDate->id) }}" method="POST" style="display:inline-block;">
               @csrf
               @method('DELETE')
               <button type="submit" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
@@ -80,8 +80,8 @@
           <td>{{ $content->title }}</td>
           <td>{!! Str::limit($content->description, 100) !!}</td>
           <td>
-            <a href="{{ route('content.edit', $content->id) }}" class="badge text-bg-warning me-2">Edit</a>
-            <form action="{{ route('content.delete', $content->id) }}" method="POST" style="display:inline-block;">
+            <a href="{{ route('for-author.content.edit', $content->id) }}" class="badge text-bg-warning me-2">Edit</a>
+            <form action="{{ route('for-author.content.delete', $content->id) }}" method="POST" style="display:inline-block;">
               @csrf
               @method('DELETE')
               <button type="submit" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
@@ -95,7 +95,7 @@
 
   <div id="AddContent" class="tabcontent mt-3">
     <h3>Add Content</h3>
-    <form action="{{ route('content.store') }}" method="POST">
+    <form action="{{ route('for-author.content.store') }}" method="POST">
       @csrf
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>

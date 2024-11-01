@@ -102,8 +102,8 @@
           <td>{{ $account->payment_method }}</td>
           <td>{!! $account->description !!}</td>
           <td>
-            <a href="{{ route('bank-account.edit', $account->id) }}" class="badge text-bg-warning me-2">Edit</a>
-            <form action="{{ route('bank-account.delete', $account->id) }}" method="POST" style="display:inline;">
+            <a href="{{ route('registration.bank-account.edit', $account->id) }}" class="badge text-bg-warning me-2">Edit</a>
+            <form action="{{ route('registration.bank-account.delete', $account->id) }}" method="POST" style="display:inline;">
               @csrf
               @method('DELETE')
               <button type="submit" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
@@ -118,7 +118,7 @@
   <div id="AddBank" class="tabcontent mt-3">
     <h3>Add Bank Account</h3>
     <hr>
-    <form action="{{ route('bank-account.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('registration.bank-account.store') }}" method="POST" enctype="multipart/form-data">
       @csrf
       <div class="mb-3">
         <label for="paymentMethode" class="form-label">Payment Methode</label>
@@ -140,7 +140,7 @@
   <div id="RegistLink" class="tabcontent mt-3">
     <h3>Registration Link</h3>
     <hr>
-    <form action="{{ route('registration-link.store-or-update') }}" method="POST">
+    <form action="{{ route('registration.link.store-or-update') }}" method="POST">
       @csrf
       <div class="mb-3">
         <div class="row">

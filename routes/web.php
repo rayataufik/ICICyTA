@@ -5,8 +5,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\FooterController;
 use App\Http\Controllers\SpeakerController;
 use App\Http\Controllers\CallPaperController;
+use App\Http\Controllers\CommitteeController;
 use App\Http\Controllers\HeroSectionController;
 use App\Http\Controllers\RegistrationFeeController;
 
@@ -47,48 +49,41 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/content/{content}', [CallPaperController::class, 'updateContent'])->name('updateContent');
     });
 
-    Route::get('/dashboard/for-author', [AuthorController::class, 'index'])->name('for-author');
-    Route::post('/dashboard/for-author/important-date', [AuthorController::class, 'storeImportantDate'])->name('important-date.store');
-    Route::delete('/dashboard/for-author/important-date/{id}', [AuthorController::class, 'deleteImportantDate'])->name('important-date.delete');
-    Route::post('/dashboard/for-author/content', [AuthorController::class, 'storeContent'])->name('content.store');
-    Route::delete('/dashboard/for-author/content/{id}', [AuthorController::class, 'deleteContent'])->name('content.delete');
-    Route::get('/dashboard/for-author/content/edit/{id}', [AuthorController::class, 'editContent'])->name('content.edit');
-    Route::put('/dashboard/for-author/content/{id}', [AuthorController::class, 'updateContent'])->name('content.update');
+    Route::prefix('dashboard/for-author')->name('for-author.')->group(function () {
+        Route::get('/', [AuthorController::class, 'index'])->name('index');
+        Route::post('/important-date', [AuthorController::class, 'storeImportantDate'])->name('important-date.store');
+        Route::delete('/important-date/{id}', [AuthorController::class, 'deleteImportantDate'])->name('important-date.delete');
 
-    Route::get('/dashboard/registration', [RegistrationFeeController::class, 'index'])->name('registration');
-    Route::post('/dashboard/registration/fee', [RegistrationFeeController::class, 'storeRegistrationFee'])->name('registration.store');
-    Route::delete('/dashboard/registration/fee/{id}', [RegistrationFeeController::class, 'destroyRegistrationFee'])->name('registration.delete');
-    Route::post('/dashboard/registration/bank-account', [RegistrationFeeController::class, 'storeBankAccount'])->name('bank-account.store');
-    Route::get('/dashboard/registration/bank-account/edit/{id}', [RegistrationFeeController::class, 'editBankAccount'])->name('bank-account.edit');
-    Route::put('/dashboard/registration/bank-account/{id}', [RegistrationFeeController::class, 'updateBankAccount'])->name('bank-account.update');
-    Route::delete('/dashboard/registration/bank-account/{id}', [RegistrationFeeController::class, 'destroyBankAccount'])->name('bank-account.delete');
-    Route::post('/dashboard/registration/link', [RegistrationFeeController::class, 'storeOrUpdateLink'])->name('registration-link.store-or-update');
-});
+        Route::post('/content', [AuthorController::class, 'storeContent'])->name('content.store');
+        Route::delete('/content/{id}', [AuthorController::class, 'deleteContent'])->name('content.delete');
+        Route::get('/content/edit/{id}', [AuthorController::class, 'editContent'])->name('content.edit');
+        Route::put('/content/{id}', [AuthorController::class, 'updateContent'])->name('content.update');
+    });
 
-Route::get('/dashboard/commitee', function () {
-    return view('pages.dashboard.commitee');
-});
+    Route::prefix('dashboard/registration')->name('registration.')->group(function () {
+        Route::get('/', [RegistrationFeeController::class, 'index'])->name('index');
+        Route::post('/fee', [RegistrationFeeController::class, 'storeRegistrationFee'])->name('store');
+        Route::delete('/fee/{id}', [RegistrationFeeController::class, 'destroyRegistrationFee'])->name('delete');
 
-Route::get('/dashboard/footer', function () {
-    return view('pages.dashboard.footer');
-});
+        Route::post('/bank-account', [RegistrationFeeController::class, 'storeBankAccount'])->name('bank-account.store');
+        Route::get('/bank-account/edit/{id}', [RegistrationFeeController::class, 'editBankAccount'])->name('bank-account.edit');
+        Route::put('/bank-account/{id}', [RegistrationFeeController::class, 'updateBankAccount'])->name('bank-account.update');
+        Route::delete('/bank-account/{id}', [RegistrationFeeController::class, 'destroyBankAccount'])->name('bank-account.delete');
 
-Route::get('/dashboard/speaker/edit', function () {
-    return view('pages.dashboard.speakeredit');
-});
+        Route::post('/link', [RegistrationFeeController::class, 'storeOrUpdateLink'])->name('link.store-or-update');
+    });
 
-Route::get('/dashboard/call-for-papers/content/edit', function () {
-    return view('pages.dashboard.callforpaperedit');
-});
+    Route::prefix('dashboard/commitee')->name('commitee.')->group(function () {
+        Route::get('/', [CommitteeController::class, 'index'])->name('index');
+        Route::post('/', [CommitteeController::class, 'store'])->name('store');
+        Route::get('/{commitee}/edit', [CommitteeController::class, 'edit'])->name('edit');
+        Route::put('/{commitee}', [CommitteeController::class, 'update'])->name('update');
+        Route::delete('/{commitee}', [CommitteeController::class, 'destroy'])->name('destroy');
+    });
 
-Route::get('/dashboard/for-author/content/edit', function () {
-    return view('pages.dashboard.forauthoredit');
-});
-
-Route::get('/dashboard/registration/bank-account/edit', function () {
-    return view('pages.dashboard.registrationfeeedit');
-});
-
-Route::get('/dashboard/commitee/content/edit', function () {
-    return view('pages.dashboard.commiteeedit');
+    Route::prefix('dashboard/footer')->name('footer.')->group(function () {
+        Route::get('/', [FooterController::class, 'index'])->name('index');
+        Route::post('/{footers}', [FooterController::class, 'update'])->name('update');
+        Route::delete('/{supporter}/supporter-image', [FooterController::class, 'destroySupporter'])->name('deleteSupporter');
+    });
 });

@@ -3,21 +3,21 @@
 @section('content')
 
 <div class="container">
-  <h1 class="display-4">Commitee</h1>
+  <h1 class="display-4">Committee</h1>
   <hr>
   <div class="tabs">
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link tablinks" href="#" onclick="openContent(event, 'List')">List Commitee</a>
+        <a class="nav-link tablinks" href="#" onclick="openContent(event, 'List')">List Committee</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link tablinks" href="#" onclick="openContent(event, 'Add')">Add Commitee</a>
+        <a class="nav-link tablinks" href="#" onclick="openContent(event, 'Add')">Add Committee</a>
       </li>
     </ul>
   </div>
 
   <div id="List" class="tabcontent mt-3">
-    <h3>List Commitee</h3>
+    <h3>List Committee</h3>
     <hr>
     <table class="table">
       <thead>
@@ -29,38 +29,43 @@
         </tr>
       </thead>
       <tbody>
+        @foreach ($committees as $committee)
         <tr>
-          <th scope="row">1</th>
-          <td>Steering Committee</td>
-          <td>Lorem ipsum dolor sit amet.</td>
+          <th scope="row">{{ $loop->iteration }}</th>
+          <td>{{ $committee->title }}</td>
+          <td>{!! $committee->description !!}</td>
           <td>
-            <a href="/dashboard/commitee/content/edit" class="badge text-bg-warning me-2">Edit</a>
-            <a href="/delete/speaker" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+            <a href="{{ route('commitee.edit', $committee->id) }}" class="badge text-bg-warning me-2">Edit</a>
+            <form action="{{ route('commitee.destroy', $committee->id) }}" method="POST" style="display:inline;">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+            </form>
           </td>
         </tr>
+        @endforeach
       </tbody>
     </table>
   </div>
 
   <div id="Add" class="tabcontent mt-3">
-    <h3>Add Commitee</h3>
+    <h3>Add Committee</h3>
     <hr>
-    <form action="">
+    <form action="{{ route('commitee.store') }}" method="POST">
+      @csrf
       <div class="mb-3">
         <label for="InputTitle" class="form-label">Title</label>
-        <input type="text" class="form-control" id="InputTitle">
+        <input type="text" class="form-control" id="InputTitle" name="title" required>
       </div>
       <div class="mb-3">
         <label for="InputDescription" class="form-label">Description</label>
-        <input id="InputDescription" type="hidden" name="content">
+        <input id="InputDescription" type="hidden" name="description">
         <trix-editor input="InputDescription" id="editor"></trix-editor>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
-
 </div>
-
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {

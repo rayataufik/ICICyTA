@@ -27,7 +27,7 @@ class SpeakerController extends Controller
         }
 
         Speaker::create($validated);
-        return redirect()->route('dashboard.speakers')->with('success', 'Speaker added successfully');
+        return redirect()->back()->with('success', 'Speaker added successfully');
     }
 
     public function edit(Speaker $speaker)
@@ -51,7 +51,7 @@ class SpeakerController extends Controller
         }
 
         $speaker->update($validated);
-        return redirect()->route('dashboard.speakers')->with('success', 'Speaker updated successfully');
+        return redirect()->route('dashboard.speakers.index')->with('success', 'Speaker updated successfully');
     }
 
     public function destroy(Speaker $speaker)
@@ -60,6 +60,6 @@ class SpeakerController extends Controller
             Storage::delete('public/' . $speaker->image);
         }
         $speaker->delete();
-        return redirect()->route('dashboard.speakers')->with('success', 'Speaker deleted successfully');
+        return redirect()->back()->with('success', 'Speaker deleted successfully');
     }
 }

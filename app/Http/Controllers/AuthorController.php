@@ -62,7 +62,7 @@ class AuthorController extends Controller
         $content = ContentAuthor::findOrFail($id);
         $content->update($request->all());
 
-        return redirect()->route('for-author')->with('success', 'Content updated successfully');
+        return redirect()->route('for-author.index')->with('success', 'Content updated successfully');
     }
 
     public function deleteContent($id)

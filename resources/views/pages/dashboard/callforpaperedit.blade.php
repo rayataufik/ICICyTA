@@ -20,7 +20,7 @@
         <trix-editor input="x" id="editorContent"></trix-editor>
       </div>
       <div class="d-grid gap-2 d-md-block">
-        <a href="{{ route('dashboard.callpaper') }}" class="btn btn-secondary">Back</a>
+        <a href="{{ route('dashboard.callpaper.index') }}" class="btn btn-secondary">Back</a>
         <button class="btn btn-primary" type="submit">Submit</button>
       </div>
     </form>

@@ -58,7 +58,7 @@ class CallPaperController extends Controller
             ]);
         }
 
-        return redirect()->route('dashboard.callpaper')->with('success', 'Call for paper updated successfully!');
+        return redirect()->back()->with('success', 'Call for paper updated successfully!');
     }
 
     public function editContent(Content $content)
@@ -75,7 +75,7 @@ class CallPaperController extends Controller
 
         $content->update($validatedData);
 
-        return redirect()->route('dashboard.callpaper')->with('success', 'Content updated successfully!');
+        return redirect()->route('dashboard.callpaper.index')->with('success', 'Content updated successfully!');
     }
 
 
@@ -83,6 +83,6 @@ class CallPaperController extends Controller
     {
         $content->delete();
 
-        return redirect()->route('dashboard.callpaper')->with('success', 'Content deleted successfully!');
+        return redirect()->back()->with('success', 'Content deleted successfully!');
     }
 }

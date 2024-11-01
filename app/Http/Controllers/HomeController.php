@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\About;
+use App\Models\Footer;
 use App\Models\Content;
 use App\Models\Speaker;
 use App\Models\CallPaper;
+use App\Models\Committee;
 use App\Models\BankAccount;
 use App\Models\HeroSection;
 use Illuminate\Http\Request;
@@ -29,6 +31,7 @@ class HomeController extends Controller
         $RegistrationFees = RegistrationFee::all();
         $BankAccounts = BankAccount::all();
         $RegistrationLink = RegistrationLink::first();
+        $Committees = Committee::all();
 
         return view('pages.home', compact(
             'heroSection',
@@ -40,7 +43,8 @@ class HomeController extends Controller
             'ContentAuthors',
             'RegistrationFees',
             'BankAccounts',
-            'RegistrationLink'
+            'RegistrationLink',
+            'Committees'
         ));
     }
 }

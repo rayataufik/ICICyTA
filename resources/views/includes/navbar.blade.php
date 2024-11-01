@@ -16,7 +16,7 @@
         <a class="nav-link" href="#registration">Registration</a>
         <a class="nav-link" href="#commitee">Committee</a>
         @auth
-        <a class="nav-link" href="dashboard/home">Dashboard</a>
+        <a class="nav-link btn-submit-paper" href="dashboard/home">Dashboard</a>
         @endauth
       </div>
     </div>

@@ -82,7 +82,7 @@ class RegistrationFeeController extends Controller
 
         $account->save();
 
-        return redirect()->route('registration')->with('success', 'Bank account updated successfully.');
+        return redirect()->route('registration.index')->with('success', 'Bank account updated successfully.');
     }
 
     public function destroyBankAccount($id)

@@ -32,7 +32,7 @@ class HeroSectionController extends Controller
             $heroSection->sponsors()->create(['sponsor_image' => $filePath]);
         }
 
-        return redirect()->route('pages.dashboard.home')->with('success', 'Hero section updated successfully with sponsors!');
+        return redirect()->back()->with('success', 'Hero section updated successfully with sponsors!');
     }
 
     public function destroySponsor(Sponsor $sponsor)
@@ -45,6 +45,6 @@ class HeroSectionController extends Controller
             $sponsor->delete();
         }
 
-        return redirect()->route('pages.dashboard.home')->with('success', 'Sponsor deleted successfully!');
+        return redirect()->back()->with('success', 'Sponsor deleted successfully!');
     }
 }

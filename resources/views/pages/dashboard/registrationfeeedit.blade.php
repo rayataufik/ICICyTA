@@ -7,7 +7,7 @@
   <hr>
   <h3>Edit Bank Account</h3>
   <hr>
-  <form action="{{ route('bank-account.update', $account->id) }}" method="POST" enctype="multipart/form-data">
+  <form action="{{ route('registration.bank-account.update', $account->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -33,7 +33,7 @@
     </div>
 
     <div class="d-grid gap-2 d-md-block">
-      <a href="{{ route('registration') }}" class="btn btn-secondary">Back</a>
+      <a href="{{ route('registration.index') }}" class="btn btn-secondary">Back</a>
       <button class="btn btn-primary" type="submit">Submit</button>
     </div>
   </form>
