@@ -9,7 +9,16 @@ class CallPaper extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'cfp_title', 'cfp_description', 'cfp_image', 'tour_title', 'tour_poster'];
+    protected $fillable = [
+        'title',
+        'description',
+        'cfp_title',
+        'cfp_description',
+        'cfp_image',
+        'tour_title',
+        'tour_poster',
+        'background_image',
+    ];
 
 
     public function contents()

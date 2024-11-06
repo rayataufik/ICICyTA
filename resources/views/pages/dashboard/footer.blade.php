@@ -4,6 +4,22 @@
 
 <div class="container">
   <h1 class="display-4">Footer</h1>
+  @if (session('success'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert" id="autoCloseAlert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <script>
+    setTimeout(function() {
+      var alert = document.getElementById('autoCloseAlert');
+      if (alert) {
+        var bootstrapAlert = new bootstrap.Alert(alert);
+        bootstrapAlert.close();
+      }
+    }, 5000);
+  </script>
+  @endif
   <hr>
   <div class="tabs">
     <ul class="nav nav-tabs">
@@ -132,13 +148,29 @@
     <div class="row">
       @foreach ($footers->supporter as $supporters)
       <div class="col-md-3 col-sm-6 mb-3">
-        <div class="card text-end" style="width: 100%;">
+        <div class="card" style="width: 100%;">
           <img src="{{ asset('storage/' . $supporters->image_supporter) }}" class="card-img-top" alt="supporters Image">
           <div class="card-body">
             <form action="{{ route('footer.deleteSupporter', $supporters->id) }}" method="POST" style="display:inline-block;">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger mt-3">Delete</button>
+              <button type="button" class="btn btn-danger mt-3 text-end" data-bs-toggle="modal" data-bs-target="#{{$supporters->id}}">Delete</button>
+              <div class="modal fade" id="{{$supporters->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure you want to delete this item?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </form>
           </div>
         </div>

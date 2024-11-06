@@ -12,12 +12,12 @@
         <div class="title">
           @if($heroSection)
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-10">
               <h1 class="display-4">{{$heroSection->conference_title}}</h1>
             </div>
           </div>
         </div>
-        <div class="event-date-time mt-5">
+        <div class="event-date-time mt-3">
           <div class="location-date">
             <h6 class="event-date">
               {{ \Carbon\Carbon::parse($heroSection->start_date)->format('M d') }}-{{ \Carbon\Carbon::parse($heroSection->end_date)->format('d, Y') }}
@@ -58,20 +58,18 @@
 </section>
 
 <section id="about" class="about">
-  @if ($aboutSection)
   <div class="bg-image position-relative" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url('{{ asset('storage/' . $aboutSection->image) }}') no-repeat center center;
     background-size: cover;
     padding-top: 200px; 
     padding-bottom: 200px;">
-    <div class="container text-white text-center" data-aos="fade-up" data-aos-delay="0">
+    <div class="container text-white text-center" data-aos="fade-up">
       <div class="mt-5">
         <h1 class="title display-4">{{$aboutSection->title}}</h1>
         <div class="lead mt-3">{!! $aboutSection->description !!}</div>
       </div>
     </div>
   </div>
-  @endif
 </section>
 
 <section id="speakers" class="speakers">
@@ -92,6 +90,7 @@
             <div class="text-white">
               <h5 class="card-title mt-3">{{$speakers->name}}</h5>
               <p class="card-text">{{$speakers->description}}</p>
+              <a href="{{$speakers->link}}" class="stretched-link" target="_blank"></a>
             </div>
           </div>
         </div>
@@ -103,11 +102,11 @@
 </section>
 
 <section id="call-for-papers" class="call-for-papers">
-  <div class="call-papers d-flex justify-content-between; ">
+  <div class="call-papers d-flex justify-content-between">
     <div class="papers-left" style="flex : 1;">
       <h1 class="title">Call For Papers</h1>
       <div class="d-flex flex-column align-items-center justify-content-center p-5">
-        <div class="card card-papers">
+        <div class="card card-papers" data-aos="fade-up">
           <div class="card-body text-center">
             <img src="images/ikontracks.png" alt="" srcset="">
             <h2 class="mt-2 title-conference">{{ $cfps->title }}</h2>
@@ -121,11 +120,11 @@
     </div>
     <div style="flex : 1;">
       <div style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),
-          url('images/conference.jpg') no-repeat center;
+          url('{{ asset('storage/' . $cfps->background_image) }}') no-repeat center;
           background-size: cover;
           padding-top: 200px; 
           padding-bottom: 200px;">
-        <div class="text-white text-center papers-right">
+        <div class="text-white text-center papers-right" data-aos="fade-up">
           <div class="mt-5">
             <p class="lead mt-3">The 4th ICICyTA 2024 carries a theme of "From Data to Decisions: Cybernetics and Intelligent Systems in Healthcare, IoT, and Business". Accepted papers will be submitted for inclusion into IEEE Xplore subject to meeting IEEE Xplore’s scope and quality requirements. We invite researchers to submit high-quality and unpublished research papers in the fields of cybernetics, computational intelligence, Internet of Things (IoT), biomedical engineering and applications, but not limited to.</p>
           </div>
@@ -137,7 +136,7 @@
     <div class="position-relative">
       <div class="row">
         @foreach ($contents as $content)
-        <div class="col-md-6 mb-5">
+        <div class="col-md-6 mb-5" data-aos="fade-up">
           <div class="card">
             <div class="card-body">
               <div class="position-absolute text-center z-1" style="top: -50px; width:fit-content; left: 50%; transform: translateX(-50%);">
@@ -231,7 +230,7 @@
       For Authors
     </h1>
     <div class="row justify-content-center mt-5">
-      <div class="col-md-10 position-relative mx-auto">
+      <div class="col-md-10 position-relative mx-auto" data-aos="fade-up">
         <div class="position-absolute text-center z-1" style="top: -20px; width:fit-content; left: 50%; transform: translateX(-50%);">
           <div class="bg-title p-2 text-white rounded" style="background:#5B5195">
             Important Date
@@ -260,7 +259,7 @@
         <div class="for-author-card row mt-4 justify-content-around">
           @foreach ($ContentAuthors as $ContentAuthor)
           <div class="col-md-6 mb-5">
-            <div class="card">
+            <div class="card" data-aos="fade-up">
               <div class="card-body">
                 <div class="position-absolute text-center z-1" style="top: -20px; width:fit-content; left: 50%; transform: translateX(-50%);">
                   <div class="bg-title p-2 text-white rounded" style="background:#5B5195">
@@ -290,7 +289,7 @@
         <div class="card-fees row text-center">
           @foreach ($RegistrationFees as $RegistrationFee)
           <div class="col-md-6 mb-4">
-            <div class="card card-fee text-white">
+            <div class="card card-fee text-white" data-aos="fade-up">
               <div class="card-body">
                 <h5 class="card-title">{{ $RegistrationFee->type }}</h5>
                 <p class="card-text">
@@ -303,14 +302,12 @@
           @endforeach
         </div>
       </div>
-
       <div class="col-md-6">
-        <div class="card">
+        <div class="card" data-aos="fade-up">
           <div class="card-body">
             <p class="card-text">
               Payment should be made after acceptance by Bank Transfer to “Bank Negara Indonesia (BNI)” as below:
             </p>
-
             @foreach ($BankAccounts as $BankAccount)
             <div class="accordion" id="accordionBank">
               <div class="accordion-item mb-3">
@@ -338,7 +335,6 @@
             </div>
             @endforeach
           </div>
-
           <div class="d-flex justify-content-center mb-3">
             <a class="btn btn-main" href="{{ $RegistrationLink->link }}" target="_blank" role="button">Registration Link</a>
           </div>
@@ -351,22 +347,18 @@
           <a href="mailto:icicyta@telkomuniversity.ac.id">icicyta@telkomuniversity.ac.id</a>
         </h6>
       </div>
-
     </div>
-
-
   </div>
 </section>
-
 
 <section id="commitee" class="commitee">
   <div class="container">
     <h1 class="title-commitee text-center mb-4 pt-5">
-      Commitee
+      Committee
     </h1>
     <div class="row">
       @foreach ($Committees as $Committee)
-      <div class="col-md-6 mb-4">
+      <div class="col-md-6 mb-4" data-aos="fade-up">
         <div class="accordion" id="accordion">
           <div class="accordion-item">
             <h2 class="accordion-header">
@@ -419,7 +411,6 @@
       clearInterval(countdown);
       document.getElementById("countdown").innerHTML = "<h1 class='display-4'>Event has Ended</h1>";
     }
-
   }, 1000);
 </script>
 @stop

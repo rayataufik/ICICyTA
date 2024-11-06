@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('cfp_image')->nullable();
             $table->string('tour_title')->nullable();
             $table->string('tour_poster')->nullable();
+            $table->string('background_image')->nullable();
             $table->timestamps();
         });
     }

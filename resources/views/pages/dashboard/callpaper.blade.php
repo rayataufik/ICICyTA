@@ -4,6 +4,22 @@
 
 <div class="container mb-5">
   <h1 class="display-4">Call for Paper</h1>
+  @if (session('success'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert" id="autoCloseAlert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <script>
+    setTimeout(function() {
+      var alert = document.getElementById('autoCloseAlert');
+      if (alert) {
+        var bootstrapAlert = new bootstrap.Alert(alert);
+        bootstrapAlert.close();
+      }
+    }, 5000);
+  </script>
+  @endif
   <hr>
   <div class="tabs">
     <ul class="nav nav-tabs">
@@ -24,6 +40,9 @@
       </li>
       <li class="nav-item">
         <a class="nav-link tablinks" href="#" onclick="openContent(event, 'AddContent')">Upload Content</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link tablinks" href="#" onclick="openContent(event, 'AddBackgroundImage')">Upload Background Image</a>
       </li>
     </ul>
   </div>
@@ -128,7 +147,23 @@
             <form action="{{ route('dashboard.callpaper.deleteContent', $content->id) }}" method="POST" style="display: inline;">
               @csrf
               @method('DELETE')
-              <button type="submit" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+              <button type="button" class="badge text-bg-danger" data-bs-toggle="modal" data-bs-target="#{{$content->id}}">Delete</button>
+              <div class="modal fade" id="{{$content->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure you want to delete this content?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </form>
           </td>
         </tr>
@@ -137,7 +172,38 @@
     </table>
   </div>
 
+  <div id="AddBackgroundImage" class="tabcontent mt-3">
+    <h3>Background Image</h3>
+    <div class="row">
+      <div class="col-md-7 d-flex">
+        <form action="{{ route('dashboard.callpaper.update', $callPaper->id) }}" method="POST" enctype="multipart/form-data" class="d-flex">
+          @csrf
+          @method('POST')
 
+          <div class="me-3">
+            <label for="InputImage" class="form-label mt-3">Input Background Image</label>
+            <input type="file" class="form-control" name="background_image" id="InputImage">
+          </div>
+
+          <div class="align-self-end">
+            <button type="submit" class="btn btn-primary" id="submitImage">Submit</button>
+          </div>
+        </form>
+      </div>
+      @if ($callPaper->background_image)
+      <div class="mt-3">
+        <div class="row">
+          <div class="col-md-3 col-sm-6">
+            <div class="card-header">
+              <div class="mb-2">Image Preview</div>
+              <img src="{{ asset('storage/' . $callPaper->background_image) }}" class="card-img-top" alt="Sponsor Image">
+            </div>
+          </div>
+        </div>
+      </div>
+      @endif
+    </div>
+  </div>
 
 </div>
 

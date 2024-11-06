@@ -23,6 +23,11 @@
     </div>
 
     <div class="mb-3">
+      <label for="InputLink" class="form-label">Link Speaker</label>
+      <input type="text" class="form-control" id="InputLink" name="link" value="{{ $speaker->link }}" required>
+    </div>
+
+    <div class="mb-3">
       <label for="InputDescription" class="form-label">Description</label>
       <textarea class="form-control" id="InputDescription" name="description" rows="3">{{ $speaker->description }}</textarea>
     </div>

@@ -26,7 +26,16 @@ class CallPaperController extends Controller
             'cfp_image' => 'nullable|image',
             'tour_title' => 'nullable|string|max:255',
             'tour_poster' => 'nullable|image',
+            'background_image' => 'nullable|image',
         ]);
+
+        if ($request->hasFile('background_image')) {
+            if ($callPaper->background_image) {
+                Storage::delete('public/' . $callPaper->background_image);
+            }
+            $imagePath = $request->file('background_image')->store('cfp_backgorund-image', 'public');
+            $validated['background_image'] = $imagePath;
+        }
 
         if ($request->hasFile('cfp_image')) {
             if ($callPaper->cfp_image) {
@@ -84,5 +93,15 @@ class CallPaperController extends Controller
         $content->delete();
 
         return redirect()->back()->with('success', 'Content deleted successfully!');
+    }
+
+    public function destroyImage(CallPaper $callPaper)
+    {
+        if ($callPaper->image) {
+            Storage::delete('public/' . $callPaper->background_image);
+            $callPaper->update(['background_image' => null]);
+        }
+
+        return redirect()->back()->with('success', 'Image deleted successfully!');
     }
 }

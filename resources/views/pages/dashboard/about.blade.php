@@ -3,6 +3,22 @@
 @section('content')
 <div class="container">
   <h1 class="display-4">About Conference</h1>
+  @if (session('success'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert" id="autoCloseAlert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <script>
+    setTimeout(function() {
+      var alert = document.getElementById('autoCloseAlert');
+      if (alert) {
+        var bootstrapAlert = new bootstrap.Alert(alert);
+        bootstrapAlert.close();
+      }
+    }, 5000);
+  </script>
+  @endif
   <hr>
   <div class="tabs">
     <ul class="nav nav-tabs">
@@ -18,21 +34,9 @@
     </ul>
   </div>
 
-  @if ($errors->any())
-  <div class="alert alert-danger mt-3">
-    <ul>
-      @foreach ($errors->all() as $error)
-      <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-  @endif
-
   <form action="{{ route('dashboard.about.update', $about->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('POST')
-
-    <!-- Title Tab -->
     <div id="Title" class="tabcontent mt-3">
       <h3>Title Conference</h3>
       <label for="InputTitle" class="form-label mt-3">Input Title Conference</label>
@@ -45,7 +49,6 @@
       </div>
     </div>
 
-    <!-- Conference Description Tab -->
     <div id="Conference" class="tabcontent mt-3">
       <h3>Conference Description</h3>
       <label for="InputDescription" class="form-label mt-3">Conference Description</label>
@@ -56,14 +59,12 @@
     </div>
   </form>
 
-  <!-- Background Image Tab -->
   <div id="image-conference" class="tabcontent mt-3">
     <h3>Background Image</h3>
 
 
     <div class="row">
       <div class="col-md-7 d-flex">
-        <!-- Form element -->
         <form action="{{ route('dashboard.about.update', $about->id) }}" method="POST" enctype="multipart/form-data" class="d-flex">
           @csrf
           @method('POST')
@@ -79,20 +80,16 @@
         </form>
       </div>
       @if ($about->image)
-      <form action="{{ route('dashboard.about.deleteImage', $about->id) }}" method="POST" style="display:inline-block;">
-        @csrf
-        @method('DELETE')
-        <div class="mt-3">
-          <div class="row">
-            <div class="col-md-3 col-sm-6">
-              <div class="card-header">
-                <div class="mb-2">Image Preview</div>
-                <img src="{{ asset('storage/' . $about->image) }}" class="card-img-top" alt="Sponsor Image">
-              </div>
+      <div class="mt-3">
+        <div class="row">
+          <div class="col-md-3 col-sm-6">
+            <div class="card-header">
+              <div class="mb-2">Image Preview</div>
+              <img src="{{ asset('storage/' . $about->image) }}" class="card-img-top" alt="Sponsor Image">
             </div>
           </div>
         </div>
-      </form>
+      </div>
       @endif
     </div>
   </div>

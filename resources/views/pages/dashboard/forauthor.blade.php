@@ -4,6 +4,22 @@
 
 <div class="container">
   <h1 class="display-4">For Author</h1>
+  @if (session('success'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert" id="autoCloseAlert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <script>
+    setTimeout(function() {
+      var alert = document.getElementById('autoCloseAlert');
+      if (alert) {
+        var bootstrapAlert = new bootstrap.Alert(alert);
+        bootstrapAlert.close();
+      }
+    }, 5000);
+  </script>
+  @endif
   <hr>
   <div class="tabs">
     <ul class="nav nav-tabs">
@@ -53,7 +69,23 @@
             <form action="{{ route('for-author.important-date.delete', $importantDate->id) }}" method="POST" style="display:inline-block;">
               @csrf
               @method('DELETE')
-              <button type="submit" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+              <button type="button" class="badge text-bg-danger" data-bs-toggle="modal" data-bs-target="#{{$importantDate->id}}">Delete</button>
+              <div class="modal fade" id="{{$importantDate->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure you want to delete this item?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </form>
           </td>
         </tr>
@@ -84,7 +116,23 @@
             <form action="{{ route('for-author.content.delete', $content->id) }}" method="POST" style="display:inline-block;">
               @csrf
               @method('DELETE')
-              <button type="submit" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+              <button type="button" class="badge text-bg-danger" data-bs-toggle="modal" data-bs-target="#{{$content->id}}">Delete</button>
+              <div class="modal fade" id="{{$content->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure you want to delete this item?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </form>
           </td>
         </tr>
@@ -109,7 +157,6 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
-
 </div>
 
 

@@ -36,8 +36,8 @@
       </a>
     </li>
     <li>
-      <a href="/dashboard/commitee" class="nav-link {{ Request::is('dashboard/commitee') ? 'active' : 'link-body-emphasis' }}">
-        Commitee
+      <a href="/dashboard/committee" class="nav-link {{ Request::is('dashboard/committee') ? 'active' : 'link-body-emphasis' }}">
+        Committee
       </a>
     </li>
     <li>
@@ -49,7 +49,7 @@
   <hr>
   <div class="dropdown">
     <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-      <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+      <img src="/images/logo-humic.png" alt="" width="32" height="32" class="rounded-circle me-2 image-fluid">
       <strong>Admin</strong>
     </a>
     <ul class="dropdown-menu text-small shadow">

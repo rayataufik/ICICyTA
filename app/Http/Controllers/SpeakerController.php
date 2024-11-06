@@ -20,6 +20,7 @@ class SpeakerController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'image' => 'required|image',
+            'link' => 'nullable|url',
         ]);
 
         if ($request->hasFile('image')) {
@@ -41,6 +42,7 @@ class SpeakerController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'image' => 'image',
+            'link' => 'nullable|url',
         ]);
 
         if ($request->hasFile('image')) {

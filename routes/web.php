@@ -24,7 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('dashboard/home')->name('dashboard.home.')->group(function () {
         Route::get('/', [HeroSectionController::class, 'index'])->name('index');
         Route::post('/{heroSection}', [HeroSectionController::class, 'update'])->name('update');
-        Route::delete('/{heroSection}/sponsor-image', [HeroSectionController::class, 'destroySponsor'])->name('deleteSponsor');
+        Route::delete('/{sponsor}/sponsor-image', [HeroSectionController::class, 'destroySponsor'])->name('deleteSponsor');
     });
 
     Route::prefix('dashboard/about')->name('dashboard.about.')->group(function () {
@@ -47,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/{content}', [CallPaperController::class, 'destroyContent'])->name('deleteContent');
         Route::get('/content/{content}/edit', [CallPaperController::class, 'editContent'])->name('editContent');
         Route::put('/content/{content}', [CallPaperController::class, 'updateContent'])->name('updateContent');
+        Route::delete('/{callPaper}/image', [CallPaperController::class, 'destroyImage'])->name('deleteImage');
     });
 
     Route::prefix('dashboard/for-author')->name('for-author.')->group(function () {
@@ -73,7 +74,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/link', [RegistrationFeeController::class, 'storeOrUpdateLink'])->name('link.store-or-update');
     });
 
-    Route::prefix('dashboard/commitee')->name('commitee.')->group(function () {
+    Route::prefix('dashboard/committee')->name('commitee.')->group(function () {
         Route::get('/', [CommitteeController::class, 'index'])->name('index');
         Route::post('/', [CommitteeController::class, 'store'])->name('store');
         Route::get('/{commitee}/edit', [CommitteeController::class, 'edit'])->name('edit');

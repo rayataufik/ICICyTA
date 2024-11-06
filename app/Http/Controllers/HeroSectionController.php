@@ -42,8 +42,8 @@ class HeroSectionController extends Controller
             if (file_exists($imagePath)) {
                 unlink($imagePath);
             }
-            $sponsor->delete();
         }
+        $sponsor->delete();
 
         return redirect()->back()->with('success', 'Sponsor deleted successfully!');
     }

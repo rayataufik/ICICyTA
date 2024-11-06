@@ -3,6 +3,22 @@
 @section('content')
 <div class="container">
   <h1 class="display-4">Hero Section</h1>
+  @if (session('success'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert" id="autoCloseAlert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <script>
+    setTimeout(function() {
+      var alert = document.getElementById('autoCloseAlert');
+      if (alert) {
+        var bootstrapAlert = new bootstrap.Alert(alert);
+        bootstrapAlert.close();
+      }
+    }, 5000);
+  </script>
+  @endif
   <hr>
   <div class="tabs">
     <ul class="nav nav-tabs">
@@ -25,7 +41,6 @@
     @csrf
     @method('POST')
 
-    <!-- Dates Section -->
     <div id="Dates" class="tabcontent mt-3">
       <h3>Date & Location</h3>
       <label for="InputLocation" class="form-label mt-3">Input Location</label>
@@ -44,11 +59,8 @@
           <button type="submit" class="btn btn-primary" id="submitDate" disabled>Submit</button>
         </div>
       </div>
-
-
     </div>
 
-    <!-- Conference Section -->
     <div id="Conference" class="tabcontent mt-3">
       <h3>Conference Title</h3>
       <label for="InputTitle" class="form-label mt-3">Input Title</label>
@@ -59,9 +71,6 @@
       </div>
     </div>
 
-
-
-    <!-- EDAS Section -->
     <div id="Edas" class="tabcontent mt-3">
       <h3>EDAS</h3>
       <label for="InputLink" class="form-label">Input Link Edas</label>
@@ -73,7 +82,6 @@
     </div>
   </form>
 
-  <!-- Sponsor Section -->
   <div id="Sponsor" class="tabcontent mt-3">
     <h3>Sponsor Image</h3>
     <form action="{{ route('dashboard.home.update', $heroSection->id) }}" method="POST" enctype="multipart/form-data">
@@ -90,13 +98,29 @@
     <div class="row">
       @foreach ($heroSection->sponsors as $sponsor)
       <div class="col-md-3 col-sm-6">
-        <div class="card text-end" style="width: 100%;">
+        <div class="card" style="width: 100%;">
           <img src="{{ asset('storage/' . $sponsor->sponsor_image) }}" class="card-img-top" alt="Sponsor Image">
           <div class="card-body">
             <form action="{{ route('dashboard.home.deleteSponsor', $sponsor->id) }}" method="POST" style="display:inline-block;">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger mt-3">Delete</button>
+              <button type="button" class="btn btn-danger mt-3 text-end" data-bs-toggle="modal" data-bs-target="#{{$sponsor->id}}">Delete</button>
+              <div class="modal fade" id="{{$sponsor->id}}" tabindex="-1" aria-labelledby="deleteSponsorLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure you want to delete this sponsor?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </form>
           </div>
         </div>
