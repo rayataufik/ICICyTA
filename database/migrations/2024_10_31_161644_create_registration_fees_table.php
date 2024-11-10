@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('registration_fees', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
-            $table->decimal('price_usd', 10, 2);
-            $table->decimal('price_idr', 15, 2);
+            $table->string('type')->nullable();
+            $table->decimal('price_usd', 10, 2)->nullable();
+            $table->decimal('price_idr', 15, 2)->nullable();
             $table->timestamps();
         });
     }

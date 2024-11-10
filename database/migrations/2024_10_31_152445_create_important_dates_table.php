@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('important_dates', function (Blueprint $table) {
             $table->id();
-            $table->string('important');
-            $table->date('date');
+            $table->string('important')->nullable();
+            $table->date('date')->nullable();
             $table->timestamps();
         });
     }

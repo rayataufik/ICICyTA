@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('supporters', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('footer_id');
-            $table->string('image_supporter');
+            $table->string('image_supporter')->nullable();
             $table->timestamps();
             $table->foreign('footer_id')->references('id')->on('footers')->onDelete('cascade');
         });

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('registration_links', function (Blueprint $table) {
             $table->id();
-            $table->text('link')->unique();
+            $table->text('link')->unique()->nullable();
             $table->timestamps();
         });
     }
